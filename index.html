@@ -1,0 +1,206 @@
+<head>
+
+</head>
+<body>
+input your previous sem gpa: <input type="text" id="prev-gpa" placeholder="6.9"/>
+<br/>
+IncludeLAB?<br/>
+    <label class="switch">
+        <input type="checkbox" id="labs" onchange="displayLabOutput(this)"> 
+        <span class="slider round"></span>
+    </label>
+<br/>
+<hr/>
+<br/>
+<div id="main-marks">
+    
+</div>
+
+<div id="lab-marks">
+
+</div>
+<br/>
+<hr/>
+<br/>
+<button onclick="computeGPA()">
+  GET MY GPA BICH
+</button>
+<h1 id="output">
+
+</h1>
+<script>
+    let subjects = ["ELECTIVE_1", "ELECTIVE_2", "CC", "OOAD", "CD" ]
+    let nonsubjects = ["CC_LAB", "OOAD_LAB"]
+
+    let toggle=document.getElementById("lab-marks");
+    window.addEventListener('load',displayOutput);
+
+    function computeGPA(){
+      var
+      prevgpa = parseFloat(document.getElementById("prev-gpa").value),
+      subjects = document.querySelectorAll(".mark"),
+      outof = document.querySelectorAll(".outof"),
+      credits = document.querySelectorAll(".credits"),
+      nonsubjects = document.querySelectorAll(".lab-mark"),
+      laboutof = document.querySelectorAll(".lab-outof"),
+      n = subjects.length,
+      m = nonsubjects.length;
+      
+      outof = Object.keys(outof).map(outo => parseFloat(outof[outo].value));
+      subjects = Object.keys(subjects).map(outo => parseFloat(subjects[outo].value));
+      credits = Object.keys(credits).map(outo => parseFloat(credits[outo].value));
+      nonsubjects =  Object.keys(nonsubjects).map(outo => parseFloat(nonsubjects[outo].value));
+      laboutof =  Object.keys(laboutof).map(outo => parseFloat(laboutof[outo].value));
+      let marks=[];
+      for (var i=0;i<n;i++){
+        if (i%2==0){
+          let x = (subjects[i] / outof[i])*0.15;
+          
+          marks.push(x);
+          console.log('EVENT', marks);
+        } else {
+          let x = (subjects[i] / outof[i])*0.85;
+          marks[marks.length-1] += x;
+          console.log('odd',marks);
+        }
+      }
+      for (var i=0;i<m;i++){
+        let x = (nonsubjects[i] / laboutof[i]);
+        marks.push(x)
+      }
+      marks = marks.map(mark => mark*100);
+      console.log("HELLO",marks);
+      finalmarks = []
+      for (var i=0;i<credits.length;i++){
+        if (marks[i] > 92){
+          marks[i] = 10;
+        } else if(marks[i] > 82){
+          marks[i]= 9;
+        } else if(marks[i] > 72) {
+          marks[i]= 8;
+        } else if(marks[i] > 62){
+          marks[i]= 7;
+        } else if(marks[i] > 52){
+          marks[i]= 5;
+        } else if(marks[i] > 40) {
+          marks[i]= 4;
+        } else{
+          marks[i]=0;
+        }
+        marks[i] *= credits[i]; 
+      }
+      console.log(marks);
+      let markSum = 0;
+      let creditsSum = 0;
+      for (var i=0;i<credits.length;i++){
+        markSum+=marks[i];
+        creditsSum+=credits[i];
+      }
+      console.log(markSum, creditsSum);
+      let finalMarks = markSum/creditsSum;
+      finalMarks = finalMarks*0.5 + prevgpa*0.5;
+      console.log(finalMarks);
+      let outputd = document.getElementById("output");
+      outputd.innerHTML = finalMarks;
+    }
+
+    function displayOutput(){
+      outputdiv=document.getElementById("main-marks");
+      output=""
+      subjects.forEach(lab=>output+=`
+          <h3>
+              ${lab}
+          </h3>
+          assignment: <input type="number" class="mark" placeholder="6.9" /> out of <input type="number" class="outof" placeholder="10" value="10" /><br/>
+          <br/>isa: <input type="number" class="mark" placeholder="6.9" /> out of <input type="number" class="outof" placeholder="10" value="10" /><br/>
+          <br/>credits: <input type="number" class="credits" placeholder="4.20" value="4" /><br/>
+      `);
+      outputdiv.innerHTML=output;
+    }
+
+    function displayLabOutput(e){
+      outputdiv=document.getElementById("lab-marks");
+        if(e.checked){
+            
+            output=""
+            nonsubjects.forEach(lab=>output+=`
+                <h3>
+                    ${lab}
+                </h3>
+                marks: <input type="number" class="lab-mark" placeholder="6.9" /> out of <input type="number" class="lab-outof" placeholder="10" /><br/>
+                <br/>credits: <input type="number" class="credits" placeholder="4.20" value="1" /><br/>
+                `);
+            outputdiv.innerHTML=output;
+        }else{
+          outputdiv.innerHTML=""
+        }
+    }
+    function calculateCGPA(){
+
+    }
+
+
+</script>
+<style>
+    .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 20px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background: linear-gradient(to right, red, orange , yellow, rgb(43, 231, 43), blue, rgb(114, 54, 114));
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #000000;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(38px);
+  -ms-transform: translateX(38px);
+  transform: translateX(38px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+</style>
+</body>
