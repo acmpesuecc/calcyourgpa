@@ -9,7 +9,7 @@
   Input your previous sem gpa:
   <input type="text" id="prev-gpa" class="rounded p-2 border-2" placeholder="6.9" />
   <br />
-   input the class interval (Marks range for each grade): <input type="number" id="class-interval" value="10" placeholder="10"/>
+   input the class interval (Marks range for each grade): <input type="number" class="rounded p-2 border-2" id="class-interval" value="10" placeholder="10"/>
 <br/>
   Include LAB?<br />
   <label class="switch">
@@ -112,7 +112,7 @@
       finalMarks = finalMarks * 0.5 + prevgpa * 0.5;
       console.log(finalMarks);
       let outputd = document.getElementById("output");
-      outputd.innerHTML = finalMarks;
+      outputd.innerHTML = "<p class='2xl-text'>✨ " +finalMarks + " ✨</p>";
     }
 
     function displayOutput() {
@@ -159,35 +159,6 @@
     function calculateCGPA() {}
   </script>
   <style>
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 20px;
-    }
-
-    /* Hide default HTML checkbox */
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    /* The slider */
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      -webkit-transition: 0.4s;
-      transition: 0.4s;
-    }
-
-</script>
-<style>
     .switch {
   position: relative;
   display: inline-block;
