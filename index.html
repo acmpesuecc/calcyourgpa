@@ -4,6 +4,8 @@
 <body>
 input your previous sem gpa: <input type="text" id="prev-gpa" placeholder="6.9"/>
 <br/>
+input the class interval (Marks range for each grade): <input type="number" id="class-interval" value="10"/>
+<br/>
 IncludeLAB?<br/>
     <label class="switch">
         <input type="checkbox" id="labs" onchange="displayLabOutput(this)"> 
@@ -71,18 +73,20 @@ IncludeLAB?<br/>
       marks = marks.map(mark => mark*100);
       console.log("HELLO",marks);
       finalmarks = []
+      let top_ci = 100
+      var ci = parseInt(document.getElementById("class-interval").value)
       for (var i=0;i<credits.length;i++){
-        if (marks[i] > 92){
+        if (marks[i] > top_ci-ci){
           marks[i] = 10;
-        } else if(marks[i] > 82){
+        } else if(marks[i] > top_ci-(2*ci)){
           marks[i]= 9;
-        } else if(marks[i] > 72) {
+        } else if(marks[i] > top_ci-(3*ci)) {
           marks[i]= 8;
-        } else if(marks[i] > 62){
+        } else if(marks[i] > top_ci-(4*ci)){
           marks[i]= 7;
-        } else if(marks[i] > 52){
+        } else if(marks[i] > top_ci-(5*ci)){
           marks[i]= 5;
-        } else if(marks[i] > 40) {
+        } else if(marks[i] > top_ci-(6*ci)) {
           marks[i]= 4;
         } else{
           marks[i]=0;
