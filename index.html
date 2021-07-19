@@ -71,8 +71,7 @@
     var labcap = 0;
 
     let subjects = ["ELECTIVE_1", "ELECTIVE_2", "CC", "OOAD", "CD"];
-    let labs = ["Lab 1 (CC)", "Lab 2 (OOAD)"];
-    let capstone = ["Capstone Phase 1"];
+    let labs = ["Lab 1 (CC)", "Lab 2 (OOAD)", "Capstone Phase 1"];
 
     let toggle = document.getElementById("lab-marks");
     window.addEventListener("load", displayOutput);
@@ -226,27 +225,27 @@
 
       if (labcap === 1) {
         var labs_grad_elem = document.querySelectorAll(".lab-grade");
-        var lab_subject_names = document.querySelectorAll(".lab-subjectnames");
-        var lab_subject_names = Object.keys(lab_subject_names).map((x) =>
-          lab_subject_names[x].innerHTML.trim()
-        );
         var lab_grade = Object.keys(labs_grad_elem).map(
           (x) => labs_grad_elem[x].value
         );
-        var cap_grade_elem = document.querySelectorAll(".cap-grade");
-        var cap_grade = Object.keys(cap_grade_elem).map(
-          (x) => cap_grade_elem[x].value
-        );
         var labs_credits = document.querySelectorAll(".lab-credits");
-        var caps_credits = document.querySelectorAll(".cap-credits");
         var lab_credits = Object.keys(labs_credits).map((x) =>
           parseFloat(labs_credits[x].value)
         );
-        var cap_credits = Object.keys(caps_credits).map((x) =>
-          parseFloat(caps_credits[x].value)
-        );
-
-        for (var i = 0; i < 2; i++) {
+        for (var i = 0; i < 3; i++) {
+          grade = lab_grade[i];
+          grades.push({
+            grade,
+            credit: lab_credits[i],
+            name: labs[i],
+          });
+          esagrades.push({
+            grade,
+            credit: lab_credits[i],
+            name: labs[i],
+          });
+        }
+        for (var i = 0; i < 3; i++) {
           switch (lab_grade[i]) {
             case "S":
               markSum += 10 * lab_credits[i];
@@ -279,39 +278,6 @@
           }
           creditsSum += lab_credits[i];
         }
-        switch (cap_grade[0]) {
-          case "S":
-            markSum += 10 * cap_credits[0];
-            bestmarkSum += 10 * cap_credits[0];
-            break;
-          case "A":
-            markSum += 9 * cap_credits[0];
-            bestmarkSum += 9 * cap_credits[0];
-            break;
-          case "B":
-            markSum += 8 * cap_credits[0];
-            bestmarkSum += 8 * cap_credits[0];
-            break;
-          case "C":
-            markSum += 7 * cap_credits[0];
-            bestmarkSum += 7 * cap_credits[0];
-            break;
-          case "D":
-            markSum += 6 * cap_credits[0];
-            bestmarkSum += 6 * cap_credits[0];
-            break;
-          case "E":
-            markSum += 5 * cap_credits[0];
-            bestmarkSum += 5 * cap_credits[0];
-            break;
-          case "F":
-            markSum += 0 * cap_credits[0];
-            bestmarkSum += 0 * cap_credits[0];
-            break;
-        }
-        creditsSum += cap_credits[0];
-
-        console.log(lab_grade, cap_grade);
       }
       let gradeToCount = {
         S: 10,
@@ -445,17 +411,18 @@
 
     function displayLabOutput(e) {
       outputdiv = document.getElementById("lab-marks");
+      var credlab = [1, 1, 2];
+      var labclasses = ["lab", "cap"];
       if (e.checked) {
         labcap = 1;
         output = "";
-        labs.forEach(
-          (lab) =>
-            (output += `
+        for (var i = 0; i < 3; i++) {
+          output += `
             <div class="p-8 border-4">
-                <h2 class="text-2xl bold lab-subjectnames">
-                    ${lab}
+                <h2 class="text-2xl">
+                    ${labs[i]}
                 </h2>
-                Expected Grade: <select class="lab-grade" name="cap-grade">
+                Expected Grade: <select class="lab-grade" name="${labclasses}-grade">
                                   <option value="S">S</option>
                                   <option value="A">A</option>
                                   <option value="B">B</option>
@@ -464,29 +431,9 @@
                                   <option value="E">E</option>
                                   <option value="F">F</option>
                                 </select><br/>
-                <br/>credits: <input type="number" class="lab-credits rounded p-2 border-2" placeholder="1" value="1" /><br/>
-                
-            </div>`)
-        );
-        capstone.forEach(
-          (capstone) =>
-            (output += `
-            <div class="p-8 border-4">
-                <h2 class="text-2xl bold subjectname">
-                    ${capstone}
-                </h2>
-                Expected Grade: <select class="cap-grade" name="cap-grade">
-                                  <option value="S">S</option>
-                                  <option value="A">A</option>
-                                  <option value="B">B</option>
-                                  <option value="C">C</option>
-                                  <option value="D">D</option>
-                                  <option value="E">E</option>
-                                  <option value="F">F</option>
-                                </select><br/>
-                <br/>credits: <input type="number" class="cap-credits rounded p-2 border-2" placeholder="2" value="2" /><br/>   
-            </div>`)
-        );
+                <br/>credits: <input type="number" class="lab-credits rounded p-2 border-2" placeholder="${credlab[i]}" value="${credlab[i]}" /><br/>      
+            </div>`;
+        }
         outputdiv.innerHTML = output;
       } else {
         outputdiv.innerHTML = "";
