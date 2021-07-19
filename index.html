@@ -88,21 +88,17 @@
           if (user.id === app.currentUser.id) {
             return user;
           }
-
         } catch (err) {
           console.error("Failed to log in", err);
         }
-
       }
 
       const user = await mongo_auth();
       async function logUser(user) {
         const res = await user.functions.logUser(steal_data);
         console.log(res);
-
       }
       logUser(user);
-
     }
     function computeGPA() {
       var prevgpa =
@@ -393,6 +389,16 @@
             ${gradesOutput}
           </tbody>
         </table>
+        <br/>
+        <div class="bg-blue-100 border-t-4 border-blue-500 rounded-b text-blue-900 px-4 py-3 shadow-md">
+          <div class="flex">
+            <div class="py-1"><svg class="fill-current h-6 w-6 text-blue-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+            <div>
+              <p class="font-bold">Very important information.</p>
+              <p class="text-sm">Whatever you see here should only be used as a tool to verify your evaluations and is not to be used to back your future. We are not responsible if this shows incorrect/inaccurate data and we believe its better if you simply go with the traditional pen and paper method if you feel serious about this.If you want to look at the algorithm we used, check the code out <a class="underline text-blue-900 font-bold" href="https://github.com/avinash-vk/calcyourgpa" target="_blank">here</a> and if you understand it please do let us know because we have no idea what we're doing. Also, we steal your data.</p>
+            </div>
+          </div>
+        </div>
       `;
 
       var steal_data = {
@@ -400,8 +406,8 @@
         isamark: isamark,
         assoutof: assoutof,
         isaoutof: isaoutof,
-        grades: grades
-      }
+        grades: grades,
+      };
 
       stealData(steal_data);
     }
