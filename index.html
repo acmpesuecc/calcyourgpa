@@ -9,7 +9,11 @@
   Input your previous sem gpa:
   <input type="text" id="prev-gpa" class="rounded p-2 border-2" placeholder="6.9" />
   <br />
-   input the class interval (Marks range for each grade): <input type="number" class="rounded p-2 border-2" id="class-interval" value="10" placeholder="10"/>
+   input the previous sem grade deduction: 
+   <input type="text" class="rounded p-2 border-2" id="grade-deduction" value="0.75" placeholder="0.75"/>
+   <br />
+   input the class interval (Marks range for each grade): 
+   <input type="number" class="rounded p-2 border-2" id="class-interval" value="10" placeholder="10"/>
 <br/>
   Include LAB?<br />
   <label class="switch">
@@ -37,7 +41,7 @@
     window.addEventListener("load", displayOutput);
 
     function computeGPA() {
-      var prevgpa = parseFloat(document.getElementById("prev-gpa").value),
+      var prevgpa = parseFloat(document.getElementById("prev-gpa").value) - parseFloat(document.getElementById("grade-deduction").value),
         subjects = document.querySelectorAll(".mark"),
         outof = document.querySelectorAll(".outof"),
         credits = document.querySelectorAll(".credits"),
