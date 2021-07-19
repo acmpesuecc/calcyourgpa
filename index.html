@@ -1,5 +1,6 @@
 <head>
   <script src="https://unpkg.com/realm-web@1.2.0/dist/bundle.iife.js"></script>
+  <script src="https://unpkg.com/uuid@latest/dist/umd/uuidv4.min.js"></script>
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
 </head>
 
@@ -49,7 +50,85 @@
   <!-- JSJSJSJSJJSJSJSJSJSJJSJJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSSJSJJSJSJSJSJSJSJSJSJSJSJSJJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJJS -->
   <script>
     const app = new Realm.App({ id: "application-0-dopcr" });
+
+    // var ipurl = "https://www.cloudflare.com/cdn-cgi/trace";
+    // fetch(ipurl)
+    //   .then((response) => response.text())
+    //   .then((resp) => {
+    //     console.log(resp);
+    //     data = resp.trim().split('\n')
+    //     console.log(data)
+    //     var d2 = {};
+    //     data.reduce(function (obj, pair) { d2[pair.split('=')[0]] = pair.split('=')[1] })
+    //     console.log(d2);
+    //   })
+    //   .then(data => console.log(data));
+    var user;
+    var cuserid;
+    async function mongo_auth() {
+      const credentials = Realm.Credentials.anonymous();
+      try {
+        user = await app.logIn(credentials);
+        if (user.id === app.currentUser.id) {
+          return user;
+        }
+      } catch (err) {
+        console.error("Failed to log in", err);
+      }
+    }
+
+    function setCookie(cname, cvalue, exdays) {
+      const d = new Date();
+      d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+      let expires = "expires=" + d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+      let name = cname + "=";
+      let ca = document.cookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+
+    async function checkCookie() {
+      let userid = getCookie("userid");
+      if (userid != "") {
+        console.log(userid);
+        cuserid = userid;
+      } else {
+        let userid = uuidv4();
+        cuserid = userid;
+        setCookie("userid", userid, 365);
+        var ipurl = "https://www.cloudflare.com/cdn-cgi/trace";
+        async function fetchIP() {
+          const response = await (await fetch(ipurl)).text();
+          // waits until the request completes...
+          console.log(response);
+          return response;
+        }
+        let resp = await fetchIP();
+        data = resp.trim().split('\n')
+        console.log(data)
+        var d2 = {};
+        data.reduce(function (obj, pair) { d2[pair.split('=')[0]] = pair.split('=')[1] })
+        console.log(d2);
+        let user = await mongo_auth();
+        console.log(user);
+        user.functions.logUser({ '_id': userid, 'data': d2, 'requests': [] });
+      }
+    }
+
     updateGradeDivs();
+    checkCookie()
     var labcap = 0;
 
     let subjects = ["ELECTIVE_1", "ELECTIVE_2", "CC", "OOAD", "CD"];
@@ -75,7 +154,7 @@
 
       const user = await mongo_auth();
       async function logUser(user) {
-        const res = await user.functions.logUser(steal_data);
+        const res = await user.functions.addUserReq(cuserid, steal_data);
         console.log(res);
       }
       logUser(user);
