@@ -13,11 +13,11 @@
     Input the class interval (Marks range for each grade):
     <input type="number" class="rounded p-2 border-2" id="class-interval" value="10" placeholder="10" />
     <br />
-    <!-- Include LAB?<br />
+    Include Lab and Project?<br />
     <label class="switch">
       <input type="checkbox" id="labs" onchange="displayLabOutput(this)" />
       <span class="slider round"></span>
-    </label> -->
+    </label>
     <br />
     <br />
     <hr />
@@ -33,8 +33,11 @@
     <h1 id="output"></h1>
   </div>
   <script>
+    var labcap = 0;
+
     let subjects = ["ELECTIVE_1", "ELECTIVE_2", "CC", "OOAD", "CD"];
-    let nonsubjects = ["CC_LAB", "OOAD_LAB"];
+    let labs = ["Lab 1 (CC)", "Lab 2 (OOAD)"]
+    let capstone = ["Capstone Phase 1"];
 
     let toggle = document.getElementById("lab-marks");
     window.addEventListener("load", displayOutput);
@@ -109,6 +112,72 @@
         markSum += finalgrade[i] * credits[i];
         creditsSum += credits[i];
       }
+
+      if (labcap === 1) {
+        var labs_grad_elem = document.querySelectorAll(".lab-grade");
+        var lab_grade = Object.keys(labs_grad_elem).map((x) => labs_grad_elem[x].value);
+        var cap_grade_elem = document.querySelectorAll(".cap-grade");
+        var cap_grade = Object.keys(cap_grade_elem).map((x) => cap_grade_elem[x].value);
+        var labs_credits = document.querySelectorAll(".lab-credits");
+        var caps_credits = document.querySelectorAll(".cap-credits");
+        var lab_credits = Object.keys(labs_credits).map((x) => parseFloat(labs_credits[x].value));
+        var cap_credits = Object.keys(caps_credits).map((x) => parseFloat(caps_credits[x].value));
+
+        for (var i = 0; i < 2; i++) {
+          switch (lab_grade[i]) {
+            case "S":
+              markSum += 10 * lab_credits[i];
+              break;
+            case "A":
+              markSum += 10 * lab_credits[i];
+              break;
+            case "B":
+              markSum += 10 * lab_credits[i];
+              break;
+            case "C":
+              markSum += 10 * lab_credits[i];
+              break;
+            case "D":
+              markSum += 10 * lab_credits[i];
+              break;
+            case "E":
+              markSum += 10 * lab_credits[i];
+              break;
+            case "F":
+              markSum += 10 * lab_credits[i];
+              break;
+          }
+          creditsSum += lab_credits[i];;
+        }
+
+        switch (cap_grade[0]) {
+          case "S":
+            markSum += 10 * cap_credits[0];
+            break;
+          case "A":
+            markSum += 10 * cap_credits[0];
+            break;
+          case "B":
+            markSum += 10 * cap_credits[0];
+            break;
+          case "C":
+            markSum += 10 * cap_credits[0];
+            break;
+          case "D":
+            markSum += 10 * cap_credits[0];
+            break;
+          case "E":
+            markSum += 10 * cap_credits[0];
+            break;
+          case "F":
+            markSum += 10 * cap_credits[0];
+            break;
+        }
+        creditsSum += cap_credits[0];
+
+        console.log(lab_grade, cap_grade)
+      }
+
       var finalMarks = markSum / creditsSum;
       console.log(marks, finalgrade, finalMarks, creditsSum)
       let outputd = document.getElementById("output");
@@ -138,25 +207,53 @@
     function displayLabOutput(e) {
       outputdiv = document.getElementById("lab-marks");
       if (e.checked) {
+        labcap = 1;
         output = "";
-        nonsubjects.forEach(
+        labs.forEach(
           (lab) =>
           (output += `
             <div class="p-8 border-4">
                 <h2 class="text-2xl">
                     ${lab}
                 </h2>
-                marks: <input type="number" class="lab-mark rounded p-2 border-2" placeholder="6.9" /> out of <input type="number" class="lab-outof focus:outline-none focus:ring focus:border-blue-300" placeholder="10" /><br/>
-                <br/>credits: <input type="number" class="credits rounded p-2 border-2" placeholder="4.20" value="1" /><br/>
+                Expected Grade: <select class="lab-grade" name="cap-grade">
+                                  <option value="S">S</option>
+                                  <option value="A">A</option>
+                                  <option value="B">B</option>
+                                  <option value="C">C</option>
+                                  <option value="D">D</option>
+                                  <option value="E">E</option>
+                                  <option value="F">F</option>
+                                </select><br/>
+                <br/>credits: <input type="number" class="lab-credits rounded p-2 border-2" placeholder="1" value="1" /><br/>
                 
+            </div>`)
+        );
+        capstone.forEach(
+          (capstone) =>
+          (output += `
+            <div class="p-8 border-4">
+                <h2 class="text-2xl">
+                    ${capstone}
+                </h2>
+                Expected Grade: <select class="cap-grade" name="cap-grade">
+                                  <option value="S">S</option>
+                                  <option value="A">A</option>
+                                  <option value="B">B</option>
+                                  <option value="C">C</option>
+                                  <option value="D">D</option>
+                                  <option value="E">E</option>
+                                  <option value="F">F</option>
+                                </select><br/>
+                <br/>credits: <input type="number" class="cap-credits rounded p-2 border-2" placeholder="2" value="2" /><br/>   
             </div>`)
         );
         outputdiv.innerHTML = output;
       } else {
         outputdiv.innerHTML = "";
+        labcap = 0;
       }
     }
-    function calculateCGPA() { }
   </script>
   <style>
     .switch {
