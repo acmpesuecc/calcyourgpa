@@ -1,5 +1,6 @@
 <head>
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+  <script src="https://unpkg.com/realm-web@1.2.0/dist/bundle.iife.js"></script>
 </head>
 
 <body>
@@ -35,6 +36,37 @@
     <h1 id="output"></h1>
   </div>
   <script>
+    const app = new Realm.App({ id: "application-0-dopcr" });
+    (async () => {
+      async function mongo_auth() {
+        // Create an anonymous credential
+        const credentials = Realm.Credentials.anonymous();
+        try {
+          // Authenticate the user
+          const user = await app.logIn(credentials);
+          // `App.currentUser` updates to match the logged in user
+          if (user.id === app.currentUser.id) {
+            return user;
+          }
+
+        } catch (err) {
+          console.error("Failed to log in", err);
+        }
+
+      }
+
+      const user = await mongo_auth();
+      async function logUser(user) {
+        const res = await user.functions.logUser({ "Test": "Test data" });
+        console.log(res);
+
+      }
+      logUser(user);
+
+    })().catch(err => {
+      console.error(err);
+    });
+
     updateGradeDivs();
     var labcap = 0;
 
