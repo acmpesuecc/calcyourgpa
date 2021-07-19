@@ -11,7 +11,9 @@
     <input type="text" class="rounded p-2 border-2" id="grade-deduction" value="0.75" placeholder="0.75" />
     <br />
     Input the class interval (Marks range for each grade):
-    <input type="number" class="rounded p-2 border-2" id="class-interval" value="10" placeholder="10" />
+    <input type="number" class="rounded p-2 border-2" id="class-interval" value="10" placeholder="10"
+      onchange="updateGradeDivs(this)" />
+    <div id="grade-divs"></div>
     <br />
     Include Lab and Project?<br />
     <label class="switch">
@@ -33,6 +35,7 @@
     <h1 id="output"></h1>
   </div>
   <script>
+    updateGradeDivs();
     var labcap = 0;
 
     let subjects = ["ELECTIVE_1", "ELECTIVE_2", "CC", "OOAD", "CD"];
@@ -184,6 +187,26 @@
       outputd.innerHTML = "<p class='2xl-text'>✨ " + finalMarks + " ✨</p>";
     }
 
+    function updateGradeDivs() {
+      var ci = parseInt(document.getElementById("class-interval").value);
+      let outputdiv = document.getElementById("grade-divs");
+
+      var max_ci = 100;
+      var output = "<table><tr><th>Grade</th><th>Marks Interval</th></tr>"
+      var grades = ["S", "A", "B", "C", "D", "E", "F"]
+      var cis = []
+      for (var i = 0; i < 7; i++) {
+        var ci2 = max_ci - ci;
+        cis.push(`${max_ci} to ${ci2 + 1}`);
+        max_ci = ci2;
+      }
+      for (var i = 0; i < 7; i++) {
+        output += `<tr><td>${grades[i]}</td><td>${cis[i]}</td></tr>`
+      }
+      output += "</table>"
+      outputdiv.innerHTML = output;
+
+    }
     function displayOutput() {
       outputdiv = document.getElementById("main-marks");
       output = "";
