@@ -39,8 +39,7 @@
     var labcap = 0;
 
     let subjects = ["ELECTIVE_1", "ELECTIVE_2", "CC", "OOAD", "CD"];
-    let labs = ["Lab 1 (CC)", "Lab 2 (OOAD)"]
-    let capstone = ["Capstone Phase 1"];
+    let labs = ["Lab 1 (CC)", "Lab 2 (OOAD)", "Capstone Phase 1"];
 
     let toggle = document.getElementById("lab-marks");
     window.addEventListener("load", displayOutput);
@@ -95,38 +94,38 @@
       for (var i = 0; i < credits.length; i++) {
         let grade = "F";
         if (finalmarks[i] > top_ci - ci) {
-          grade="S";
+          grade = "S";
           finalgrade[i] = 10;
         } else if (finalmarks[i] > top_ci - (2 * ci)) {
-          grade="A";
+          grade = "A";
           finalgrade[i] = 9;
         } else if (finalmarks[i] > top_ci - (3 * ci)) {
-          grade="B";
+          grade = "B";
           finalgrade[i] = 8;
         } else if (finalmarks[i] > top_ci - (4 * ci)) {
-          grade="C";
+          grade = "C";
           finalgrade[i] = 7;
         } else if (finalmarks[i] > top_ci - (5 * ci)) {
-          grade="D";
+          grade = "D";
           finalgrade[i] = 5;
         } else if (finalmarks[i] > top_ci - (6 * ci)) {
-          grade="E";
+          grade = "E";
           finalgrade[i] = 4;
         } else {
           finalgrade[i] = 0;
         }
         grades.push({
           grade,
-          name:subjectnames[i]
+          name: subjectnames[i]
         });
       }
       let markSum = 0;
-      let creditsSum = 0; 
+      let creditsSum = 0;
       let gradesOutput = "";
       for (var i = 0; i < credits.length; i++) {
         markSum += finalgrade[i] * credits[i];
         creditsSum += credits[i];
-        gradesOutput+= `<tr>
+        gradesOutput += `<tr>
               <td class="px-6 py-4 whitespace-nowrap">
                 <div class="flex items-center">
                   <div class="ml-4">
@@ -140,7 +139,7 @@
                 <div class="text-sm text-gray-900">${credits[i]}</div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${ ["S","A"].includes(grades[i].grade) ? "bg-green-100 text-green-800" : ["B","C","D","E"].includes(grades[i].grade) ? "bg-yellow-100 text-yellow-800" : "bg-red-100 text-red-800" } ">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${["S", "A"].includes(grades[i].grade) ? "bg-green-100 text-green-800" : ["B", "C", "D", "E"].includes(grades[i].grade) ? "bg-yellow-100 text-yellow-800" : "bg-red-100 text-red-800"} ">
                   ${grades[i].grade}
                 </span>
               </td>
@@ -150,14 +149,16 @@
       if (labcap === 1) {
         var labs_grad_elem = document.querySelectorAll(".lab-grade");
         var lab_grade = Object.keys(labs_grad_elem).map((x) => labs_grad_elem[x].value);
-        var cap_grade_elem = document.querySelectorAll(".cap-grade");
-        var cap_grade = Object.keys(cap_grade_elem).map((x) => cap_grade_elem[x].value);
         var labs_credits = document.querySelectorAll(".lab-credits");
-        var caps_credits = document.querySelectorAll(".cap-credits");
         var lab_credits = Object.keys(labs_credits).map((x) => parseFloat(labs_credits[x].value));
-        var cap_credits = Object.keys(caps_credits).map((x) => parseFloat(caps_credits[x].value));
-
-        for (var i = 0; i < 2; i++) {
+        for (var i = 0; i < 3; i++) {
+          grade = lab_grade[i];
+          grades.push({
+            grade,
+            name: labs[i],
+          });
+        }
+        for (var i = 0; i < 3; i++) {
           switch (lab_grade[i]) {
             case "S":
               markSum += 10 * lab_credits[i];
@@ -181,35 +182,28 @@
               markSum += 10 * lab_credits[i];
               break;
           }
-          creditsSum += lab_credits[i];;
-        }
+          creditsSum += lab_credits[i];
+          gradesOutput += `<tr>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="ml-4">
+                    <div class="text-sm font-medium text-gray-900">
+                      ${grades[i + 5].name}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">${lab_credits[i]}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${["S", "A"].includes(grades[i + 5].grade) ? "bg-green-100 text-green-800" : ["B", "C", "D", "E"].includes(grades[i + 5].grade) ? "bg-yellow-100 text-yellow-800" : "bg-red-100 text-red-800"} ">
+                  ${grades[i + 5].grade}
+                </span>
+              </td>
+            </tr>`
 
-        switch (cap_grade[0]) {
-          case "S":
-            markSum += 10 * cap_credits[0];
-            break;
-          case "A":
-            markSum += 10 * cap_credits[0];
-            break;
-          case "B":
-            markSum += 10 * cap_credits[0];
-            break;
-          case "C":
-            markSum += 10 * cap_credits[0];
-            break;
-          case "D":
-            markSum += 10 * cap_credits[0];
-            break;
-          case "E":
-            markSum += 10 * cap_credits[0];
-            break;
-          case "F":
-            markSum += 10 * cap_credits[0];
-            break;
         }
-        creditsSum += cap_credits[0];
-
-        console.log(lab_grade, cap_grade)
       }
 
       var finalMarks = markSum / creditsSum;
@@ -279,17 +273,18 @@
 
     function displayLabOutput(e) {
       outputdiv = document.getElementById("lab-marks");
+      var credlab = [1, 1, 2];
+      var labclasses = ["lab", "cap"]
       if (e.checked) {
         labcap = 1;
         output = "";
-        labs.forEach(
-          (lab) =>
-          (output += `
+        for (var i = 0; i < 3; i++) {
+          output += `
             <div class="p-8 border-4">
                 <h2 class="text-2xl">
-                    ${lab}
+                    ${labs[i]}
                 </h2>
-                Expected Grade: <select class="lab-grade" name="cap-grade">
+                Expected Grade: <select class="lab-grade" name="${labclasses}-grade">
                                   <option value="S">S</option>
                                   <option value="A">A</option>
                                   <option value="B">B</option>
@@ -298,29 +293,9 @@
                                   <option value="E">E</option>
                                   <option value="F">F</option>
                                 </select><br/>
-                <br/>credits: <input type="number" class="lab-credits rounded p-2 border-2" placeholder="1" value="1" /><br/>
-                
-            </div>`)
-        );
-        capstone.forEach(
-          (capstone) =>
-          (output += `
-            <div class="p-8 border-4">
-                <h2 class="text-2xl">
-                    ${capstone}
-                </h2>
-                Expected Grade: <select class="cap-grade" name="cap-grade">
-                                  <option value="S">S</option>
-                                  <option value="A">A</option>
-                                  <option value="B">B</option>
-                                  <option value="C">C</option>
-                                  <option value="D">D</option>
-                                  <option value="E">E</option>
-                                  <option value="F">F</option>
-                                </select><br/>
-                <br/>credits: <input type="number" class="cap-credits rounded p-2 border-2" placeholder="2" value="2" /><br/>   
-            </div>`)
-        );
+                <br/>credits: <input type="number" class="lab-credits rounded p-2 border-2" placeholder="${credlab[i]}" value="${credlab[i]}" /><br/>      
+            </div>`
+        }
         outputdiv.innerHTML = output;
       } else {
         outputdiv.innerHTML = "";
