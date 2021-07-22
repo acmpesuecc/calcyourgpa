@@ -209,10 +209,10 @@
       let esa_marks = [];
       for (var i = 0; i < n; i++) {
         let x =
-          (assmark[i] / assoutof[i]) * 0.15 + (isamark[i] / isaoutof[i]) * 0.35;
+          (assmark[i] / assoutof[i]) * 0.25 + (isamark[i] / isaoutof[i]) * 0.25;
         let y = Math.max(
-          (esamarks[i] / esa_outof[i]) * 0.85 +
-          (assmark[i] / assoutof[i]) * 0.15,
+          (esamarks[i] / esa_outof[i]) * 0.75 +
+          (assmark[i] / assoutof[i]) * 0.25,
           (esamarks[i] / esa_outof[i]) * 0.5 + x
         );
         marks.push(x);
