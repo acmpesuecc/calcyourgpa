@@ -1,5 +1,5 @@
 # calcyourgpa
-A one stop shop to calculate your GPA!
+A one stop shop to calculate your GPA! Check it out [here!](https://avinash-vk.github.io/calcyourgpa/)
 
 ## Usage Guidelines
 The website should be self-explanatory. Make sure all selected subjects have a value entered.
