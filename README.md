@@ -1,21 +1,25 @@
 # calcyourgpa
-A one stop shop to calculate your GPA! Check it out [here!](https://avinash-vk.github.io/calcyourgpa/)
+A one stop shop to calculate your GPA! 
+Here is the link: (https://avinash-vk.github.io/calcyourgpa/)
 
 ## Usage Guidelines
-The website should be self-explanatory. Make sure all selected subjects have a value entered.
+Make sure all selected subjects have their respective marks entered.
 
 ## Contributing
-We love contributions! The one rules we have are:
+We would love your contributions. The rules we have are:
 - Make the project better
 - Make the user's life easier
-- All code only in 1 file
+- All code only should be in 1 file
 
 It's a very simple project. Don't hesitate to get your hands dirty with this repo.
 
-## Tech stack:
+## Software:
 - HTML
 - CSS
 - Javascript
+- Git
 
-Maintainers: 
-Srujan, Avinash, Aarav
+Maintainers are: 
+1)Srujan
+2)Avinash
+3)Aarav
