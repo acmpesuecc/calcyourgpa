@@ -10,21 +10,21 @@
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
 </head>
 
-<body>
+<body style="background: linear-gradient(to bottom, #00cc99 0%, #99ff66 100%);">
   
   <div class="p-12">
-    Input your previous sem gpa:
+    <b>Input your previous sem gpa:</b>
     <input type="text" id="prev-gpa" class="rounded p-2 border-2" placeholder="6.9" />
     <br />
-    Input the previous sem grade deduction:
+    <b>Input the previous sem grade deduction:</b>
     <input type="text" class="rounded p-2 border-2" id="grade-deduction" value="0.75" placeholder="0.75" />
     <br />
-    Input the class interval (Marks range for each grade):
+    <b>Input the class interval (Marks range for each grade):</b>
     <input type="number" class="rounded p-2 border-2" id="class-interval" value="10" placeholder="10"
       onchange="updateGradeDivs(this)" />
     <div id="grade-divs"></div>
     <br />
-    Include Lab and Project?<br />
+    <b>Include Lab and Project?</b><br />
     <label class="switch">
       <input type="checkbox" id="labs" onchange="displayLabOutput(this)" />
       <span class="slider round"></span>
@@ -41,14 +41,14 @@
     <br />
     <button onclick="computeGPA()" class="
         bg-blue-500
-        hover:bg-blue-700
-        text-white
+        hover:bg-black
+        text-black
         font-bold
         py-2
         px-4
         rounded
       ">
-      GET MY GPA
+      <b>GET MY GPA</b>
     </button>
     <h1 id="output"></h1>
   </div>
@@ -159,11 +159,11 @@
         <h2 class="text-2xl bold subjectname">
             ${subjectname}
         </h2>
-        assignment: <input type="number" class="ass-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="ass-outof rounded p-2 border-2" placeholder="15" value="15" /><br/>
-        <br/>isa: <input type="number" class="isa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="isa-outof rounded p-2 border-2" placeholder="60" value="60" /><br/>
-        <br/>credits: <input type="number" class="credits rounded p-2 border-2" placeholder="4" value="4" /><br/>
+        <b>Assignment:</b> <input type="number" class="ass-mark rounded p-2 border-2" placeholder="6.9"/> <b>out of</b> <input type="number" class="ass-outof rounded p-2 border-2" placeholder="15" value="15" /><br/>
+        <br/><b>ISA:</b> <input type="number" class="isa-mark rounded p-2 border-2" placeholder="6.9"/> <b>out of</b> <input type="number" class="isa-outof rounded p-2 border-2" placeholder="60" value="60" /><br/>
+        <br/><b>Credits:</b> <input type="number" class="credits rounded p-2 border-2" placeholder="4" value="4" /><br/>
         <hr/>
-        <br/>Potential ESA marks if you were to write it: <input type="number" class="esa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="esa-outof rounded p-2 border-2" placeholder="60" value="100" /><br/>
+        <br/><b>Potential ESA marks if you were to write it:</b><input type="number" class="esa-mark rounded p-2 border-2" placeholder="6.9"/><b>out of</b> <input type="number" class="esa-outof rounded p-2 border-2" placeholder="60" value="100" /><br/>
         </div>
     `)
     );
