@@ -1,3 +1,6 @@
+![alt text](https://c.tenor.com/r6E7Ki54jx8AAAAC/welcome.gif)
+
+
 # Project Title
 Calculate your CGPA
 
