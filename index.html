@@ -57,12 +57,28 @@
       <div id="lab-marks"></div>
       <br />
       <hr />
+      
+      
+      <button name="button" value="OK" type="button" onclick="displayaddsubjectmarks()"
+      class="
+          bg-gray-300
+          hover:bg-gray-700
+          text-white
+          font-bold
+          py-2
+          px-4
+          rounded
+       "
+                            
+      >+
+    </button> 
+      <br />
       <br />
       <button
         onclick="computeGPA()"
         class="
-          bg-blue-500
-          hover:bg-blue-700
+          bg-gray-300
+          hover:bg-gray-700
           text-white
           font-bold
           py-2
@@ -73,6 +89,7 @@
         GET MY GPA
       </button>
       <h1 id="output"></h1>
+       
     </div>
 
     <!-- JSJSJSJSJJSJSJSJSJSJJSJJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSSJSJJSJSJSJSJSJSJSJSJSJSJSJJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJJS -->
@@ -89,6 +106,7 @@
       checkCookie();
 
       var labcap = 0;
+      var newsub = 1;
 
       let subjects = ["ELECTIVE_1", "ELECTIVE_2", "CC", "OOAD", "CD"];
       let labs = ["Lab 1 (CC)", "Lab 2 (OOAD)", "Capstone Phase 1"];
@@ -172,6 +190,12 @@
             requests: [],
           });
         }
+      }
+
+      function displayaddsubjectmarks() {
+                subjects.push("Subject-"+newsub.toString())
+        displayOutput()
+        newsub++
       }
 
       function displayOutput() {
