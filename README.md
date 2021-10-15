@@ -36,6 +36,8 @@ It's a very simple project. Don't hesitate to get your hands dirty with this rep
 - CSS
 - Javascript
 
+![alt text](https://p.kindpng.com/picc/s/171-1718210_html-dialog-element-taking-full-advantage-of-javascript.png )
+
 ## Maintainers: 
 1 .Srujan
 2 . Avinash 
