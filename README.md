@@ -1,21 +1,23 @@
-# calcyourgpa
-A one stop shop to calculate your GPA! Check it out [here!](https://acmpesuecc.github.io/calcyourgpa/)
+# CalcYourGPA
+A one stop shop to calculate your GPA! Check it out [here!](https://acmpesuecc.github.io/calcyourgpa/index.html)
 
-## Usage Guidelines
+## Usage Guidelines: <img src = "https://www.shareicon.net/data/512x512/2017/01/23/874885_book_512x512.png" width = "20" height = "20">
 The website should be self-explanatory. Make sure all selected subjects have a value entered.
 
-## Contributing
+## Contributing:
 We love contributions! The one rules we have are:
 - Make the project better
 - Make the user's life easier
-- All code only in 1 file
+- All code should be present only in a single file
 
 It's a very simple project. Don't hesitate to get your hands dirty with this repo.
 
-## Tech stack:
-- HTML <img src="https://cdn.icon-icons.com/icons2/2107/PNG/512/file_type_html_icon_130541.png" alt="drawing" width="15"/>
-- CSS <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" alt="drawing" width="13"/>
-- Javascript <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg" alt="drawing" width="15"/>
+## Tech stack: ⚙
+<img src = "https://www.freeiconspng.com/uploads/html5-icon-9.jpg" width="45" height="45">
 
-Maintainers: 
-Srujan, Avinash, Aarav
+<img src = "https://cdn.freebiesupply.com/logos/large/2x/css3-logo-png-transparent.png" width="45" height="45">
+
+<img src = "https://www.freepnglogos.com/uploads/javascript-png/png-javascript-badge-picture-8.png" width="45" height="45">
+
+## Maintainers: 
+Srujan<br>Avinash<br>Aarav
