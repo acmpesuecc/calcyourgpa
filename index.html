@@ -52,7 +52,66 @@
       <br />
       <hr />
       <br />
-      <div id="main-marks"></div>
+      <div id="dropzone">
+          <!--let subjects = ["ELECTIVE_1", "ELECTIVE_2", "CC", "OOAD", "CD"];-->
+        <div class = "node" draggable = "true" id = "record-id-1">   
+            <h2 class="text-2xl bold subjectname">
+                <input type="text" value="ELECTIVE_1"></input>
+            </h2>
+            assignment: <input type="number" class="ass-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="ass-outof rounded p-2 border-2" placeholder="15" value="15" /><br/>
+            <br/>isa: <input type="number" class="isa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="isa-outof rounded p-2 border-2" placeholder="60" value="60" /><br/>
+            <br/>credits: <input type="number" class="credits rounded p-2 border-2" placeholder="4" value="4" /><br/>
+            <hr/>
+            <br/>Potential ESA marks if you were to write it: <input type="number" class="esa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="esa-outof rounded p-2 border-2" placeholder="60" value="100" /><br/>
+            <br>
+        </div>
+
+        <div class = "node" draggable = "true" id = "record-id-2">   
+            <h2 class="text-2xl bold subjectname">
+                <input type="text" value="ELECTIVE_2"></input>
+            </h2>
+            assignment: <input type="number" class="ass-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="ass-outof rounded p-2 border-2" placeholder="15" value="15" /><br/>
+            <br/>isa: <input type="number" class="isa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="isa-outof rounded p-2 border-2" placeholder="60" value="60" /><br/>
+            <br/>credits: <input type="number" class="credits rounded p-2 border-2" placeholder="4" value="4" /><br/>
+            <hr/>
+            <br/>Potential ESA marks if you were to write it: <input type="number" class="esa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="esa-outof rounded p-2 border-2" placeholder="60" value="100" /><br/>
+            <br>
+        </div>
+        <div class = "node" draggable = "true" id = "record-id-3">   
+            <h2 class="text-2xl bold subjectname">
+                <input type="text" value="CC"></input>
+            </h2>
+            assignment: <input type="number" class="ass-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="ass-outof rounded p-2 border-2" placeholder="15" value="15" /><br/>
+            <br/>isa: <input type="number" class="isa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="isa-outof rounded p-2 border-2" placeholder="60" value="60" /><br/>
+            <br/>credits: <input type="number" class="credits rounded p-2 border-2" placeholder="4" value="4" /><br/>
+            <hr/>
+            <br/>Potential ESA marks if you were to write it: <input type="number" class="esa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="esa-outof rounded p-2 border-2" placeholder="60" value="100" /><br/>
+            <br>
+        </div>
+        <div class = "node" draggable = "true" id = "record-id-4">   
+            <h2 class="text-2xl bold subjectname">
+                <input type="text" value="OOAD"></input>
+            </h2>
+            assignment: <input type="number" class="ass-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="ass-outof rounded p-2 border-2" placeholder="15" value="15" /><br/>
+            <br/>isa: <input type="number" class="isa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="isa-outof rounded p-2 border-2" placeholder="60" value="60" /><br/>
+            <br/>credits: <input type="number" class="credits rounded p-2 border-2" placeholder="4" value="4" /><br/>
+            <hr/>
+            <br/>Potential ESA marks if you were to write it: <input type="number" class="esa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="esa-outof rounded p-2 border-2" placeholder="60" value="100" /><br/>
+            <br>
+        </div>
+        <div class = "node" draggable = "true" id = "record-id-5">   
+            <h2 class="text-2xl bold subjectname">
+                <input type="text" value="CD"></input>
+            </h2>
+            assignment: <input type="number" class="ass-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="ass-outof rounded p-2 border-2" placeholder="15" value="15" /><br/>
+            <br/>isa: <input type="number" class="isa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="isa-outof rounded p-2 border-2" placeholder="60" value="60" /><br/>
+            <br/>credits: <input type="number" class="credits rounded p-2 border-2" placeholder="4" value="4" /><br/>
+            <hr/>
+            <br/>Potential ESA marks if you were to write it: <input type="number" class="esa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="esa-outof rounded p-2 border-2" placeholder="60" value="100" /><br/>
+            <br>
+        </div>
+
+      </div>
 
       <div id="lab-marks"></div>
       <br />
@@ -74,11 +133,13 @@
       </button>
       <h1 id="output"></h1>
     </div>
-
     <!-- JSJSJSJSJJSJSJSJSJSJJSJJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSSJSJJSJSJSJSJSJSJSJSJSJSJSJJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJJS -->
 
     <script>
       const app = new Realm.App({ id: "application-0-dopcr" });
+      var nodes = document.getElementsByClassName("node");
+      
+      
       var user;
       var cuserid;
 
@@ -94,7 +155,7 @@
       let labs = ["Lab 1 (CC)", "Lab 2 (OOAD)", "Capstone Phase 1"];
 
       let toggle = document.getElementById("lab-marks");
-      window.addEventListener("load", displayOutput);
+      //window.addEventListener("load", displayOutput);
 
       function updateGradeDivs() {
         var ci = parseInt(document.getElementById("class-interval").value);
@@ -134,7 +195,7 @@
       async function checkCookie() {
         let userid = getCookie("userid");
 
-        if (userid != "" || userid == NULL) {
+        if (userid != "" || userid == null) {
           console.log(userid);
           cuserid = userid;
         } else {
@@ -174,27 +235,7 @@
         }
       }
 
-      function displayOutput() {
-        outputdiv = document.getElementById("main-marks");
-        output = "";
-        subjects.forEach(
-          (subjectname) =>
-            (output += `
-
-        <div class="p-8 border-4">
-        <h2 class="text-2xl bold subjectname">
-            <input type="text" value="${subjectname}"></input>
-        </h2>
-        assignment: <input type="number" class="ass-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="ass-outof rounded p-2 border-2" placeholder="15" value="15" /><br/>
-        <br/>isa: <input type="number" class="isa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="isa-outof rounded p-2 border-2" placeholder="60" value="60" /><br/>
-        <br/>credits: <input type="number" class="credits rounded p-2 border-2" placeholder="4" value="4" /><br/>
-        <hr/>
-        <br/>Potential ESA marks if you were to write it: <input type="number" class="esa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="esa-outof rounded p-2 border-2" placeholder="60" value="100" /><br/>
-        </div>
-    `)
-        );
-        outputdiv.innerHTML = output;
-      }
+      
 
       async function stealData(steal_data) {
         async function mongo_auth() {
@@ -578,7 +619,7 @@
           output = "";
           for (var i = 0; i < 3; i++) {
             output += `
-          <div class="p-8 border-4">
+          <div class="node">
               <h2 class="text-2xl">
                   ${labs[i]}
               </h2>
@@ -600,6 +641,111 @@
           labcap = 0;
         }
       }
+
+      var dropzone = document.getElementById("dropzone");
+            var selectedNode = '';
+            var selectedNodePos = 0;
+            
+            for(var i = 0;i<nodes.length;i++){
+                nodes[i].addEventListener("mousedown",(ev)=>{
+                    for(var i=0;i<nodes.length;i++){
+                        document.getElementById(ev.target.id).style.backgroundColor = 'cornsilk';
+                    }
+                    console.log('drag has started');
+                    //document.getElementById(ev.id).style.backgroundColor = 'red';
+                });
+
+                nodes[i].addEventListener("dragstart",(ev)=>{
+                    ev.dataTransfer.setData('text',ev.target.id)
+                    console.log('the drag has started');
+                   
+                    selectedNode = document.getElementById(ev.target.id);
+                    setTimeout(()=>{
+                        dropzone.removeChild(selectedNode);
+                    },0);
+                   
+                    
+                });
+            }
+
+            dropzone.addEventListener("dragover",(ev)=>{
+                ev.preventDefault();
+                whereAmI(ev.clientY);
+            });
+
+            dropzone.addEventListener("drop",(ev)=>{
+                ev.preventDefault();
+                console.log('dropped onto ' +selectedNodePos);
+                dropzone.insertBefore(selectedNode,dropzone.children[selectedNodePos]);
+                
+                resetNodes(); 
+                
+                setTimeout( () => {
+                    selectedNode.style.backgroundColor = 'cornsilk';
+                    selectedNode.style.transition = '2s';
+                },200);
+                
+            });
+
+            function establishNodePositions(){
+                for(var i=0;i<nodes.length;i++){
+                    var element = document.getElementById(nodes[i]['id']);
+                    var position = element.getBoundingClientRect();
+                    var yTop = position.top;
+                    var yBottom = position.bottom;
+                    nodes[i]['yPos'] = yTop + (yBottom - yTop)/2; //distance between the top and bottom
+
+                    console.log(nodes[i]['innerHTML']+' has top value of '+yTop);
+                    console.log('type of nodes is : ' + typeof(nodes));
+                    console.log('type of nodes[i] is : ' + typeof(nodes[i]));
+                    console.log('type of output : '+typeof(output));
+                    console.log('type of outputdiv : '+typeof(outputdiv));
+                    
+                    console.log(nodes[i]['innerHTML']+' has bottom value of '+yBottom);
+                    console.log('-----------');
+                }
+            }
+
+            function resetNodes(){
+                for(var i=0;i<nodes.length;i++)
+                {
+                    document.getElementById(nodes[i]['id']).style.marginTop = '10px';
+                }
+            }
+            function whereAmI(currentYPos){
+                //first we are establishing the position of the other nodes on the page
+                establishNodePositions();
+
+                //identify the node which is directly above the selected node
+                for(var i=0;i<nodes.length;i++){
+                    if(nodes[i]['yPos']<currentYPos){
+                        //this node must be higher up than the selected Node
+                        var nodeAbove = document.getElementById(nodes[i]['id']);
+                        selectedNodePos = i+1;
+                    }
+                    else{
+                        //this node must be lower down the page  than the selected Node
+                        if(!nodeBelow)
+                        {
+                            var nodeBelow = document.getElementById(nodes[i]['id']);
+                    
+                        }
+                    }
+                }
+
+                if(typeof nodeAbove == 'undefined'){
+                    selectedNodePos = 0;
+                } 
+
+                resetNodes();
+                if(typeof nodeBelow == 'object'){
+                    nodeBelow.style.marginTop = '500px';
+                    nodeBelow.style.transition = '0.8s';
+                }
+
+                console.log(selectedNodePos);
+            }
+
     </script>
     <!-- JSJSJSJSJJSJSJSJSJSJJSJJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSSJSJJSJSJSJSJSJSJSJSJSJSJSJJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJJS -->
 
@@ -673,6 +819,22 @@
       .slider.round:before {
         border-radius: 50%;
       }
+
+      #dropzone{
+             
+                margin : 10px;
+                padding : 10px;
+              
+            }
+
+            .node{
+              
+                margin : 8px;
+                padding : 10px;
+                border : 3px skyblue solid;
+            }
+        }
+
     </style>
     <!-- CSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSS -->
   </body>
