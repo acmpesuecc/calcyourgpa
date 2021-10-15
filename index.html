@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,16 +12,16 @@
 </head>
 
 <body>
-  
+
   <div class="p-12">
     Input your previous sem gpa:
-    <input type="text" id="prev-gpa" class="rounded p-2 border-2" placeholder="6.9" />
+    <input type="text" id="prev-gpa" class="rounded p-2 border-2" placeholder="0" />
     <br />
     Input the previous sem grade deduction:
-    <input type="text" class="rounded p-2 border-2" id="grade-deduction" value="0.75" placeholder="0.75" />
+    <input type="text" class="rounded p-2 border-2" id="grade-deduction" value="0" placeholder="0" />
     <br />
     Input the class interval (Marks range for each grade):
-    <input type="number" class="rounded p-2 border-2" id="class-interval" value="10" placeholder="10"
+    <input type="number" class="rounded p-2 border-2" id="class-interval" value="0" placeholder="0"
       onchange="updateGradeDivs(this)" />
     <div id="grade-divs"></div>
     <br />
@@ -93,352 +94,352 @@
       }
       output += "</table>";
       outputdiv.innerHTML = output;
-  }
+    }
 
-  function getCookie(cname) {
-    let name = cname + "=";
-    let ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
+    function getCookie(cname) {
+      let name = cname + "=";
+      let ca = document.cookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
       }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
+      return "";
+    }
+
+    async function checkCookie() {
+      let userid = getCookie("userid");
+
+      if (userid != "" || userid == NULL) {
+        console.log(userid);
+        cuserid = userid;
+      } else {
+
+        let userid = uuidv4();
+        cuserid = userid;
+
+        // Set the userID into cookie
+        setCookie("userid", userid, 365);
+        var ipurl = "https://www.cloudflare.com/cdn-cgi/trace";
+
+        async function fetchIP() {
+          const response = await (await fetch(ipurl)).text();
+          // waits until the request completes...
+          console.log(response);
+          return response;
+        }
+
+        let resp = await fetchIP();
+        data = resp.trim().split('\n')
+        console.log(data)
+        var data_dictionery = {};
+
+        // The data recieved is in format 'h=www.cloudflare.com'
+        // Thus it is then converted to key value pairs
+        data.reduce(function (obj, pair) { data_dictionery[pair.split('=')[0]] = pair.split('=')[1] })
+        console.log(data_dictionery);
+
+        let user = await mongo_auth();
+        console.log(user);
+        user.functions.logUser({ '_id': userid, 'data': data_dictionery, 'requests': [] });
       }
     }
-    return "";
-  }
 
-  async function checkCookie() {
-    let userid = getCookie("userid");
-
-    if (userid != "" || userid ==NULL) {
-      console.log(userid);
-      cuserid = userid;
-    } else {
-
-      let userid = uuidv4();
-      cuserid = userid;
-
-      // Set the userID into cookie
-      setCookie("userid", userid, 365);
-      var ipurl = "https://www.cloudflare.com/cdn-cgi/trace";
-
-      async function fetchIP() {
-        const response = await (await fetch(ipurl)).text();
-        // waits until the request completes...
-        console.log(response);
-        return response;
-      }
-
-      let resp = await fetchIP();
-      data = resp.trim().split('\n')
-      console.log(data)
-      var data_dictionery = {};
-
-      // The data recieved is in format 'h=www.cloudflare.com'
-      // Thus it is then converted to key value pairs
-      data.reduce(function (obj, pair) { data_dictionery[pair.split('=')[0]] = pair.split('=')[1] })
-      console.log(data_dictionery);
-
-      let user = await mongo_auth();
-      console.log(user);
-      user.functions.logUser({ '_id': userid, 'data': data_dictionery, 'requests': [] });
-    }
-  }
-
-  function displayOutput() {
-    outputdiv = document.getElementById("main-marks");
-    output = "";
-    subjects.forEach(
-      (subjectname) =>
-      (output += `
+    function displayOutput() {
+      outputdiv = document.getElementById("main-marks");
+      output = "";
+      subjects.forEach(
+        (subjectname) =>
+        (output += `
 
         <div class="p-8 border-4">
         <h2 class="text-2xl bold subjectname">
             ${subjectname}
         </h2>
-        assignment: <input type="number" class="ass-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="ass-outof rounded p-2 border-2" placeholder="15" value="15" /><br/>
-        <br/>isa: <input type="number" class="isa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="isa-outof rounded p-2 border-2" placeholder="60" value="60" /><br/>
-        <br/>credits: <input type="number" class="credits rounded p-2 border-2" placeholder="4" value="4" /><br/>
+        assignment: <input type="number" class="ass-mark rounded p-2 border-2" placeholder="0"/> out of <input type="number" class="ass-outof rounded p-2 border-2" placeholder="15" value="15" /><br/>
+        <br/>isa: <input type="number" class="isa-mark rounded p-2 border-2" placeholder="0"/> out of <input type="number" class="isa-outof rounded p-2 border-2" placeholder="60" value="60" /><br/>
+        <br/>credits: <input type="number" class="credits rounded p-2 border-2" placeholder="0" value="0" /><br/>
         <hr/>
-        <br/>Potential ESA marks if you were to write it: <input type="number" class="esa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="esa-outof rounded p-2 border-2" placeholder="60" value="100" /><br/>
+        <br/>Potential ESA marks if you were to write it: <input type="number" class="esa-mark rounded p-2 border-2" placeholder="0"/> out of <input type="number" class="esa-outof rounded p-2 border-2" placeholder="60" value="100" /><br/>
         </div>
     `)
-    );
-    outputdiv.innerHTML = output;
-  }
+      );
+      outputdiv.innerHTML = output;
+    }
 
-  async function stealData(steal_data) {
-    async function mongo_auth() {
-      // Create an anonymous credential
-      const credentials = Realm.Credentials.anonymous();
-      try {
-        // Authenticate the user
-        const user = await app.logIn(credentials);
-        // `App.currentUser` updates to match the logged in user
-        if (user.id === app.currentUser.id) {
-          return user;
+    async function stealData(steal_data) {
+      async function mongo_auth() {
+        // Create an anonymous credential
+        const credentials = Realm.Credentials.anonymous();
+        try {
+          // Authenticate the user
+          const user = await app.logIn(credentials);
+          // `App.currentUser` updates to match the logged in user
+          if (user.id === app.currentUser.id) {
+            return user;
+          }
+        } catch (err) {
+          console.error("Failed to log in", err);
         }
-      } catch (err) {
-        console.error("Failed to log in", err);
       }
+
+      const user = await mongo_auth();
+      async function logUser(user) {
+        const res = await user.functions.addUserReq(cuserid, steal_data);
+        console.log(res);
+      }
+      logUser(user);
     }
 
-    const user = await mongo_auth();
-    async function logUser(user) {
-      const res = await user.functions.addUserReq(cuserid, steal_data);
-      console.log(res);
-    }
-    logUser(user);
-  }
+    function computeGPA() {
+      var prevgpa =
+        parseFloat(document.getElementById("prev-gpa").value) -
+        parseFloat(document.getElementById("grade-deduction").value),
+        assmark_elem = document.querySelectorAll(".ass-mark"),
+        isamark_elem = document.querySelectorAll(".isa-mark"),
+        assoutof_elem = document.querySelectorAll(".ass-outof"),
+        isaoutof_elem = document.querySelectorAll(".isa-outof"),
+        credits = document.querySelectorAll(".credits"),
+        nonsubjects = document.querySelectorAll(".lab-mark"),
+        laboutof = document.querySelectorAll(".lab-outof"),
+        subjectnames = document.querySelectorAll(".subjectname"),
+        esamarks = document.querySelectorAll(".esa-mark"),
+        esa_outof = document.querySelectorAll(".esa-outof"),
+        n = subjects.length,
+        m = nonsubjects.length;
 
-  function computeGPA () {
-    var prevgpa =
-      parseFloat(document.getElementById("prev-gpa").value) -
-      parseFloat(document.getElementById("grade-deduction").value),
-      assmark_elem = document.querySelectorAll(".ass-mark"),
-      isamark_elem = document.querySelectorAll(".isa-mark"),
-      assoutof_elem = document.querySelectorAll(".ass-outof"),
-      isaoutof_elem = document.querySelectorAll(".isa-outof"),
-      credits = document.querySelectorAll(".credits"),
-      nonsubjects = document.querySelectorAll(".lab-mark"),
-      laboutof = document.querySelectorAll(".lab-outof"),
-      subjectnames = document.querySelectorAll(".subjectname"),
-      esamarks = document.querySelectorAll(".esa-mark"),
-      esa_outof = document.querySelectorAll(".esa-outof"),
-      n = subjects.length,
-      m = nonsubjects.length;
-    
-    // Getting the main text and remove whitespace from both sides of a string
-    subjectnames = Object.keys(subjectnames).map((x) =>
-      subjectnames[x].innerHTML.trim()
-    );
-
-    // Converting to float datatype
-    assmark = Object.keys(assmark_elem).map((x) =>
-      parseFloat(assmark_elem[x].value)
-    );
-    isamark = Object.keys(isamark_elem).map((x) =>
-      parseFloat(isamark_elem[x].value)
-    );
-    assoutof = Object.keys(assoutof_elem).map((x) =>
-      parseFloat(assoutof_elem[x].value)
-    );
-    isaoutof = Object.keys(isaoutof_elem).map((x) =>
-      parseFloat(isaoutof_elem[x].value)
-    );
-    credits = Object.keys(credits).map((outo) =>
-      parseFloat(credits[outo].value)
-    );
-    nonsubjects = Object.keys(nonsubjects).map((outo) =>
-      parseFloat(nonsubjects[outo].value)
-    );
-    esamarks = Object.keys(esamarks).map((outo) =>
-      parseFloat(esamarks[outo].value)
-    );
-    esa_outof = Object.keys(esa_outof).map((outo) =>
-      parseFloat(esa_outof[outo].value)
-    );
-    laboutof = Object.keys(laboutof).map((outo) =>
-      parseFloat(laboutof[outo].value)
-    );
-
-    let marks = [];
-    let esa_marks = [];
-
-    // Calculation the marks and ESA Marks of subjects
-
-    for (var i = 0; i < n; i++){
-      let x = (assmark[i] / assoutof[i]) * 0.25 + (isamark[i] / isaoutof[i]) * 0.25;
-      let y = Math.max((esamarks[i] / esa_outof[i]) * 0.75 +
-        (assmark[i] / assoutof[i]) * 0.25,
-        (esamarks[i] / esa_outof[i]) * 0.5 + x
+      // Getting the main text and remove whitespace from both sides of a string
+      subjectnames = Object.keys(subjectnames).map((x) =>
+        subjectnames[x].innerHTML.trim()
       );
 
-      marks.push(x);
-      esa_marks.push(y);
-    }
-
-    // Calculate for non subject marks ,i.e lab marks
-
-    for (var i = 0; i < m; i++) {
-      let x = (nonsubjects[i] / laboutof[i]) * 0.5;
-      marks.push(x);
-      esa_marks.push(x * 2);
-    }
-
-    // The marks calculated is in decimals like 0.7234
-    // Converting marks and esa marks to percentage
-
-    marks = marks.map((mark) => mark * 100);
-    esa_marks = esa_marks.map((esa_mark) => esa_mark * 100);
-
-    var finalmarks = [];
-    var prevgpascore = prevgpa * 10 * 0.5;
-    for (var i = 0; i < n; i++) {
-      finalmarks.push(marks[i] + prevgpascore);
-    }
-
-    // Calculating the Final Grades 
-    var finalgrade = [];
-    let top_ci = 100;
-    var ci = parseInt(document.getElementById("class-interval").value);
-
-    let grades = [];
-    let esagrades = [];
-    let finalesagrade = [];
-    for (var i = 0; i < credits.length; i++) {
-      let grade = "F";
-      if (esa_marks[i] > top_ci - ci) {
-        grade = "S";
-        finalesagrade[i] = 10;
-      } else if (esa_marks[i] > top_ci - 2 * ci) {
-        grade = "A";
-        finalesagrade[i] = 9;
-      } else if (esa_marks[i] > top_ci - 3 * ci) {
-        grade = "B";
-        finalesagrade[i] = 8;
-      } else if (esa_marks[i] > top_ci - 4 * ci) {
-        grade = "C";
-        finalesagrade[i] = 7;
-      } else if (esa_marks[i] > top_ci - 5 * ci) {
-        grade = "D";
-        finalesagrade[i] = 5;
-      } else if (esa_marks[i] > top_ci - 6 * ci) {
-        grade = "E";
-        finalesagrade[i] = 4;
-      } else {
-        finalesagrade[i] = 0;
-      }
-      esagrades.push({
-        grade,
-        name: subjectnames[i],
-        credit: credits[i],
-      });
-    }
-
-    for (var i = 0; i < credits.length; i++) {
-      let grade = "F";
-      if (finalmarks[i] > top_ci - ci) {
-        grade = "S";
-        finalgrade[i] = 10;
-      } else if (finalmarks[i] > top_ci - 2 * ci) {
-        grade = "A";
-        finalgrade[i] = 9;
-      } else if (finalmarks[i] > top_ci - 3 * ci) {
-        grade = "B";
-        finalgrade[i] = 8;
-      } else if (finalmarks[i] > top_ci - 4 * ci) {
-        grade = "C";
-        finalgrade[i] = 7;
-      } else if (finalmarks[i] > top_ci - 5 * ci) {
-        grade = "D";
-        finalgrade[i] = 5;
-      } else if (finalmarks[i] > top_ci - 6 * ci) {
-        grade = "E";
-        finalgrade[i] = 4;
-      } else {
-        finalgrade[i] = 0;
-      }
-      grades.push({
-        grade,
-        name: subjectnames[i],
-        credit: credits[i],
-      });
-    }
-
-    let markSum = 0,
-      bestmarkSum = 0,
-      creditsSum = 0;
-
-    let gradesOutput = "";
-    for (var i = 0; i < credits.length; i++) {
-      markSum += finalgrade[i] * credits[i];
-      bestmarkSum += Math.max(finalgrade[i], finalesagrade[i]) * credits[i];
-      creditsSum += credits[i];
-    }
-
-    // If "Include Lab and Project" toggle is true
-    // Then calculate the labs grad 
-
-    if(labcap === 1) {
-      var labs_grad_elem = document.querySelectorAll(".lab-grade");
-      var labs_credits = document.querySelectorAll(".lab-credits");
-
-      var lab_grade = Object.keys(labs_grad_elem).map(
-        (x) => labs_grad_elem[x].value
+      // Converting to float datatype
+      assmark = Object.keys(assmark_elem).map((x) =>
+        parseFloat(assmark_elem[x].value)
+      );
+      isamark = Object.keys(isamark_elem).map((x) =>
+        parseFloat(isamark_elem[x].value)
+      );
+      assoutof = Object.keys(assoutof_elem).map((x) =>
+        parseFloat(assoutof_elem[x].value)
+      );
+      isaoutof = Object.keys(isaoutof_elem).map((x) =>
+        parseFloat(isaoutof_elem[x].value)
+      );
+      credits = Object.keys(credits).map((outo) =>
+        parseFloat(credits[outo].value)
+      );
+      nonsubjects = Object.keys(nonsubjects).map((outo) =>
+        parseFloat(nonsubjects[outo].value)
+      );
+      esamarks = Object.keys(esamarks).map((outo) =>
+        parseFloat(esamarks[outo].value)
+      );
+      esa_outof = Object.keys(esa_outof).map((outo) =>
+        parseFloat(esa_outof[outo].value)
+      );
+      laboutof = Object.keys(laboutof).map((outo) =>
+        parseFloat(laboutof[outo].value)
       );
 
-      var lab_credits = Object.keys(labs_credits).map((x) =>
-        parseFloat(labs_credits[x].value)
-      );
+      let marks = [];
+      let esa_marks = [];
 
-      // The length of labs and project details is 3
+      // Calculation the marks and ESA Marks of subjects
 
-      for (var i = 0; i < 3; i++) {
-        grade = lab_grade[i];
-        grades.push({
-          grade,
-          credit: lab_credits[i],
-          name: labs[i],
-        });
+      for (var i = 0; i < n; i++) {
+        let x = (assmark[i] / assoutof[i]) * 0.25 + (isamark[i] / isaoutof[i]) * 0.25;
+        let y = Math.max((esamarks[i] / esa_outof[i]) * 0.75 +
+          (assmark[i] / assoutof[i]) * 0.25,
+          (esamarks[i] / esa_outof[i]) * 0.5 + x
+        );
+
+        marks.push(x);
+        esa_marks.push(y);
+      }
+
+      // Calculate for non subject marks ,i.e lab marks
+
+      for (var i = 0; i < m; i++) {
+        let x = (nonsubjects[i] / laboutof[i]) * 0.5;
+        marks.push(x);
+        esa_marks.push(x * 2);
+      }
+
+      // The marks calculated is in decimals like 0.7234
+      // Converting marks and esa marks to percentage
+
+      marks = marks.map((mark) => mark * 100);
+      esa_marks = esa_marks.map((esa_mark) => esa_mark * 100);
+
+      var finalmarks = [];
+      var prevgpascore = prevgpa * 10 * 0.5;
+      for (var i = 0; i < n; i++) {
+        finalmarks.push(marks[i] + prevgpascore);
+      }
+
+      // Calculating the Final Grades 
+      var finalgrade = [];
+      let top_ci = 100;
+      var ci = parseInt(document.getElementById("class-interval").value);
+
+      let grades = [];
+      let esagrades = [];
+      let finalesagrade = [];
+      for (var i = 0; i < credits.length; i++) {
+        let grade = "F";
+        if (esa_marks[i] > top_ci - ci) {
+          grade = "S";
+          finalesagrade[i] = 10;
+        } else if (esa_marks[i] > top_ci - 2 * ci) {
+          grade = "A";
+          finalesagrade[i] = 9;
+        } else if (esa_marks[i] > top_ci - 3 * ci) {
+          grade = "B";
+          finalesagrade[i] = 8;
+        } else if (esa_marks[i] > top_ci - 4 * ci) {
+          grade = "C";
+          finalesagrade[i] = 7;
+        } else if (esa_marks[i] > top_ci - 5 * ci) {
+          grade = "D";
+          finalesagrade[i] = 5;
+        } else if (esa_marks[i] > top_ci - 6 * ci) {
+          grade = "E";
+          finalesagrade[i] = 4;
+        } else {
+          finalesagrade[i] = 0;
+        }
         esagrades.push({
           grade,
-          credit: lab_credits[i],
-          name: labs[i],
+          name: subjectnames[i],
+          credit: credits[i],
         });
       }
 
-      for (var i = 0; i < 3; i++) {
-        switch (lab_grade[i]) {
-          case "S":
-            markSum += 10 * lab_credits[i];
-            bestmarkSum += 10 * lab_credits[i];
-            break;
-          case "A":
-            markSum += 9 * lab_credits[i];
-            bestmarkSum += 9 * lab_credits[i];
-            break;
-          case "B":
-            markSum += 8 * lab_credits[i];
-            bestmarkSum += 8 * lab_credits[i];
-            break;
-          case "C":
-            markSum += 7 * lab_credits[i];
-            bestmarkSum += 7 * lab_credits[i];
-            break;
-          case "D":
-            markSum += 6 * lab_credits[i];
-            bestmarkSum += 6 * lab_credits[i];
-            break;
-          case "E":
-            markSum += 5 * lab_credits[i];
-            bestmarkSum += 4 * lab_credits[i];
-            break;
-          case "F":
-            markSum += 0 * lab_credits[i];
-            bestmarkSum += 0 * lab_credits[i];
-            break;
+      for (var i = 0; i < credits.length; i++) {
+        let grade = "F";
+        if (finalmarks[i] > top_ci - ci) {
+          grade = "S";
+          finalgrade[i] = 10;
+        } else if (finalmarks[i] > top_ci - 2 * ci) {
+          grade = "A";
+          finalgrade[i] = 9;
+        } else if (finalmarks[i] > top_ci - 3 * ci) {
+          grade = "B";
+          finalgrade[i] = 8;
+        } else if (finalmarks[i] > top_ci - 4 * ci) {
+          grade = "C";
+          finalgrade[i] = 7;
+        } else if (finalmarks[i] > top_ci - 5 * ci) {
+          grade = "D";
+          finalgrade[i] = 5;
+        } else if (finalmarks[i] > top_ci - 6 * ci) {
+          grade = "E";
+          finalgrade[i] = 4;
+        } else {
+          finalgrade[i] = 0;
         }
-        creditsSum += lab_credits[i];
+        grades.push({
+          grade,
+          name: subjectnames[i],
+          credit: credits[i],
+        });
       }
-    }
+
+      let markSum = 0,
+        bestmarkSum = 0,
+        creditsSum = 0;
+
+      let gradesOutput = "";
+      for (var i = 0; i < credits.length; i++) {
+        markSum += finalgrade[i] * credits[i];
+        bestmarkSum += Math.max(finalgrade[i], finalesagrade[i]) * credits[i];
+        creditsSum += credits[i];
+      }
+
+      // If "Include Lab and Project" toggle is true
+      // Then calculate the labs grad 
+
+      if (labcap === 1) {
+        var labs_grad_elem = document.querySelectorAll(".lab-grade");
+        var labs_credits = document.querySelectorAll(".lab-credits");
+
+        var lab_grade = Object.keys(labs_grad_elem).map(
+          (x) => labs_grad_elem[x].value
+        );
+
+        var lab_credits = Object.keys(labs_credits).map((x) =>
+          parseFloat(labs_credits[x].value)
+        );
+
+        // The length of labs and project details is 3
+
+        for (var i = 0; i < 3; i++) {
+          grade = lab_grade[i];
+          grades.push({
+            grade,
+            credit: lab_credits[i],
+            name: labs[i],
+          });
+          esagrades.push({
+            grade,
+            credit: lab_credits[i],
+            name: labs[i],
+          });
+        }
+
+        for (var i = 0; i < 3; i++) {
+          switch (lab_grade[i]) {
+            case "S":
+              markSum += 10 * lab_credits[i];
+              bestmarkSum += 10 * lab_credits[i];
+              break;
+            case "A":
+              markSum += 9 * lab_credits[i];
+              bestmarkSum += 9 * lab_credits[i];
+              break;
+            case "B":
+              markSum += 8 * lab_credits[i];
+              bestmarkSum += 8 * lab_credits[i];
+              break;
+            case "C":
+              markSum += 7 * lab_credits[i];
+              bestmarkSum += 7 * lab_credits[i];
+              break;
+            case "D":
+              markSum += 6 * lab_credits[i];
+              bestmarkSum += 6 * lab_credits[i];
+              break;
+            case "E":
+              markSum += 5 * lab_credits[i];
+              bestmarkSum += 4 * lab_credits[i];
+              break;
+            case "F":
+              markSum += 0 * lab_credits[i];
+              bestmarkSum += 0 * lab_credits[i];
+              break;
+          }
+          creditsSum += lab_credits[i];
+        }
+      }
 
 
-    // Show the final grade sheet
-    let gradeToCount = {
-      S: 10,
-      A: 9,
-      B: 8,
-      C: 7,
-      D: 6,
-      E: 5,
-      F: 0,
-    };
-    for (var i = 0; i < grades.length; i++) {
-      gradesOutput += `<tr>
+      // Show the final grade sheet
+      let gradeToCount = {
+        S: 10,
+        A: 9,
+        B: 8,
+        C: 7,
+        D: 6,
+        E: 5,
+        F: 0,
+      };
+      for (var i = 0; i < grades.length; i++) {
+        gradesOutput += `<tr>
             <td class="px-6 py-4 whitespace-nowrap">
               <div class="flex items-center">
                 <div class="ml-4">
@@ -453,39 +454,39 @@
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
               <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${["S", "A"].includes(grades[i].grade)
-          ? "bg-green-100 text-green-800"
-          : ["B", "C", "D", "E"].includes(grades[i].grade)
-            ? "bg-yellow-100 text-yellow-800"
-            : "bg-red-100 text-red-800"
-        } ">
+            ? "bg-green-100 text-green-800"
+            : ["B", "C", "D", "E"].includes(grades[i].grade)
+              ? "bg-yellow-100 text-yellow-800"
+              : "bg-red-100 text-red-800"
+          } ">
                 ${grades[i].grade}
               </span>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
               <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${["S", "A"].includes(esagrades[i].grade)
-          ? "bg-green-100 text-green-800"
-          : ["B", "C", "D", "E"].includes(esagrades[i].grade)
-            ? "bg-yellow-100 text-yellow-800"
-            : "bg-red-100 text-red-800"
-        } ">
+            ? "bg-green-100 text-green-800"
+            : ["B", "C", "D", "E"].includes(esagrades[i].grade)
+              ? "bg-yellow-100 text-yellow-800"
+              : "bg-red-100 text-red-800"
+          } ">
                 ${esagrades[i].grade}
               </span>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
               <div class="text-sm text-gray-900">${gradeToCount[esagrades[i].grade] >
-          gradeToCount[grades[i].grade]
-          ? "✔️"
-          : "❌"
-        }</div>
+            gradeToCount[grades[i].grade]
+            ? "✔️"
+            : "❌"
+          }</div>
             </td>
           </tr>`;
-    }
-    var finalMarks = markSum / creditsSum;
-    var bestMarks = bestmarkSum / creditsSum;
+      }
+      var finalMarks = markSum / creditsSum;
+      var bestMarks = bestmarkSum / creditsSum;
 
-    let outputdiv = document.getElementById("output");
+      let outputdiv = document.getElementById("output");
 
-    outputdiv.innerHTML = `<p class='2xl-text'>SGPA without ESA: ✨ ${finalMarks} ✨</p><br/>
+      outputdiv.innerHTML = `<p class='2xl-text'>SGPA without ESA: ✨ ${finalMarks} ✨</p><br/>
     <p class='2xl-text'>BEST GPA Possible: ✨ ${bestMarks} ✨</p><br/>
     <hr/><br/>
     <table class="min-w-full divide-y divide-gray-200">
@@ -524,31 +525,31 @@
       </div>
     `;
 
-    let currdate = new Date().toLocaleString();
+      let currdate = new Date().toLocaleString();
 
-    var steal_data = {
-      assmark: assmark,
-      isamark: isamark,
-      assoutof: assoutof,
-      isaoutof: isaoutof,
-      grades: grades,
-      esa_marks,
-      timestamp: currdate,
-    };
+      var steal_data = {
+        assmark: assmark,
+        isamark: isamark,
+        assoutof: assoutof,
+        isaoutof: isaoutof,
+        grades: grades,
+        esa_marks,
+        timestamp: currdate,
+      };
 
-    stealData(steal_data);
+      stealData(steal_data);
 
-  }
+    }
 
-  function displayLabOutput(e) {
-    outputdiv = document.getElementById("lab-marks");
-    var credlab = [1, 1, 2];
-    var labclasses = ["lab", "cap"];
-    if (e.checked) {
-      labcap = 1;
-      output = "";
-      for (var i = 0; i < 3; i++) {
-        output += `
+    function displayLabOutput(e) {
+      outputdiv = document.getElementById("lab-marks");
+      var credlab = [1, 1, 2];
+      var labclasses = ["lab", "cap"];
+      if (e.checked) {
+        labcap = 1;
+        output = "";
+        for (var i = 0; i < 3; i++) {
+          output += `
           <div class="p-8 border-4">
               <h2 class="text-2xl">
                   ${labs[i]}
@@ -564,13 +565,13 @@
                               </select><br/>
               <br/>credits: <input type="number" class="lab-credits rounded p-2 border-2" placeholder="${credlab[i]}" value="${credlab[i]}" /><br/>      
           </div>`;
+        }
+        outputdiv.innerHTML = output;
+      } else {
+        outputdiv.innerHTML = "";
+        labcap = 0;
       }
-      outputdiv.innerHTML = output;
-    } else {
-      outputdiv.innerHTML = "";
-      labcap = 0;
     }
-  }
   </script>
   <!-- JSJSJSJSJJSJSJSJSJSJJSJJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSSJSJJSJSJSJSJSJSJSJSJSJSJSJJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJJS -->
 
@@ -649,4 +650,3 @@
 </body>
 
 </html>
-
