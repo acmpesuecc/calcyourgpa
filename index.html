@@ -16,12 +16,15 @@
     Input your previous sem gpa:
     <input type="text" id="prev-gpa" class="rounded p-2 border-2" placeholder="6.9" />
     <br />
+    <br>
     Input the previous sem grade deduction:
     <input type="text" class="rounded p-2 border-2" id="grade-deduction" value="0.75" placeholder="0.75" />
     <br />
+    <br>
     Input the class interval (Marks range for each grade):
     <input type="number" class="rounded p-2 border-2" id="class-interval" value="10" placeholder="10"
       onchange="updateGradeDivs(this)" />
+      <br>
     <div id="grade-divs"></div>
     <br />
     Include Lab and Project?<br />
@@ -159,11 +162,11 @@
         <h2 class="text-2xl bold subjectname">
             ${subjectname}
         </h2>
-        assignment: <input type="number" class="ass-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="ass-outof rounded p-2 border-2" placeholder="15" value="15" /><br/>
-        <br/>isa: <input type="number" class="isa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="isa-outof rounded p-2 border-2" placeholder="60" value="60" /><br/>
-        <br/>credits: <input type="number" class="credits rounded p-2 border-2" placeholder="4" value="4" /><br/>
+        assignment: <input type="number" class="ass-mark rounded p-2 border-2" placeholder="6.9" id = "e"/> out of <input type="number" class="ass-outof rounded p-2 border-2" placeholder="15" value="15" id = "a"/><br/>
+        <br/>isa: <input type="number" class="isa-mark rounded p-2 border-2" placeholder="6.9" id = "f"/> out of <input type="number" class="isa-outof rounded p-2 border-2" placeholder="60" value="60" id = "b" /><br/>
+        <br/>credits: <input type="number" class="credits rounded p-2 border-2" placeholder="4" value="4" id = "c"/><br/>
         <hr/>
-        <br/>Potential ESA marks if you were to write it: <input type="number" class="esa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="esa-outof rounded p-2 border-2" placeholder="60" value="100" /><br/>
+        <br/>Potential ESA marks if you were to write it: <input type="number" class="esa-mark rounded p-2 border-2" placeholder="6.9" id = "d"/> out of <input type="number" class="esa-outof rounded p-2 border-2" placeholder="60" value="100" id="g" /><br/>
         </div>
     `)
     );
@@ -610,7 +613,7 @@
       height: 20px;
       width: 20px;
       left: 2px;
-      background-color: white;
+      background-color: rgb(114, 21, 21);
       -webkit-transition: 0.4s;
       transition: 0.4s;
     }
@@ -643,6 +646,51 @@
     .slider.round:before {
       border-radius: 50%;
     }
+    #prev-gpa{
+      box-shadow: 2px 5px;
+      background-color: #340bec;
+    }
+    #grade-deduction{
+      box-shadow: 2px 5px;
+      background-color: #340bec
+    }
+    body {
+    background-color: #DBF9FC;
+    }
+    #class-interval{
+      box-shadow: 2px 5px;
+      background-color: #340bec
+    }
+    #a{
+      box-shadow: 2px 5px;
+      background-color: #340bec
+    }
+    #b{
+      box-shadow: 2px 5px;
+      background-color: #340bec
+    }
+    #c{
+      box-shadow: 2px 5px;
+      background-color: #340bec
+    }
+    #d{
+      box-shadow: 2px 5px;
+      background-color: #340bec
+    }
+    #e{
+      box-shadow: 2px 5px;
+      background-color: #340bec
+    }
+    #f{
+      box-shadow: 2px 5px;
+      background-color: #340bec
+    }
+    #g{
+      box-shadow: 2px 5px;
+      background-color: #340bec
+
+    }
+
   </style>
   <!-- CSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSS -->
 
