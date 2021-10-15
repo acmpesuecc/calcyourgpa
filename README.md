@@ -13,7 +13,7 @@ We love contributions! The one rules we have are:
 It's a very simple project. Don't hesitate to get your hands dirty with this repo.
 
 ## Tech stack: ⚙
-<img src = "https://assets.stickpng.com/thumbs/5847f5bdcef1014c0b5e489c.png" width="45" height="45">
+<img src = "https://assets.stickpng.com/thumbs/5847f5c3cef1014c0b5e489d.png" width="45" height="45">
 
 <img src = "https://cdn.freebiesupply.com/logos/large/2x/css3-logo-png-transparent.png" width="45" height="45">
 
