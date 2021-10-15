@@ -58,6 +58,9 @@
       <br />
       <hr />
       <br />
+      <button onclick="addSubject()" class="p-2 rounded border-4"> + </button> 
+      <br />
+      <br />
       <button
         onclick="computeGPA()"
         class="
@@ -600,6 +603,25 @@
           labcap = 0;
         }
       }
+
+  function addSubject() {
+    outputdiv = document.getElementById("main-marks");
+    let subjectname = "Subject - " + (subjects.length + 1);
+    output = `
+        <div class="p-8 border-4">
+        <h2 class="text-2xl bold subjectname">
+            ${subjectname}
+        </h2>
+        assignment: <input type="number" class="ass-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="ass-outof rounded p-2 border-2" placeholder="15" value="15" /><br/>
+        <br/>isa: <input type="number" class="isa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="isa-outof rounded p-2 border-2" placeholder="60" value="60" /><br/>
+        <br/>credits: <input type="number" class="credits rounded p-2 border-2" placeholder="4" value="4" /><br/>
+        <hr/>
+        <br/>Potential ESA marks if you were to write it: <input type="number" class="esa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="esa-outof rounded p-2 border-2" placeholder="60" value="100" /><br/>
+        </div>
+    `;
+    outputdiv.innerHTML += output;
+    subjects.push(subjectname);
+  }
     </script>
     <!-- JSJSJSJSJJSJSJSJSJSJJSJJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSSJSJJSJSJSJSJSJSJSJSJSJSJSJJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJSJJS -->
 
