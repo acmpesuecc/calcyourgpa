@@ -39,9 +39,10 @@
     <br />
     <hr />
     <br />
-    <button onclick="computeGPA()" class="
-        bg-blue-500
-        hover:bg-blue-700
+    <button onclick="computeGPA()" id="btn" 
+       class="
+        
+        hover:purple-700
         text-white
         font-bold
         py-2
@@ -155,15 +156,15 @@
       (subjectname) =>
       (output += `
 
-        <div class="p-8 border-4">
-        <h2 class="text-2xl bold subjectname">
+        <div class="p-8 border-4" >
+        <h2 class="text-2xl bold subjectname" id="subname">
             ${subjectname}
         </h2>
-        assignment: <input type="number" class="ass-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="ass-outof rounded p-2 border-2" placeholder="15" value="15" /><br/>
-        <br/>isa: <input type="number" class="isa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="isa-outof rounded p-2 border-2" placeholder="60" value="60" /><br/>
-        <br/>credits: <input type="number" class="credits rounded p-2 border-2" placeholder="4" value="4" /><br/>
+        assignment: <input type="number" class="ass-mark rounded p-2 border-2" placeholder="6.9" id="inp"/> out of <input type="number" class="ass-outof rounded p-2 border-2" placeholder="15" value="15" id="inp" /><br/>
+        <br/>isa: <input type="number" class="isa-mark rounded p-2 border-2" placeholder="6.9" id="inp"/> out of <input type="number" class="isa-outof rounded p-2 border-2" placeholder="60" value="60" id="inp" /><br/>
+        <br/>credits: <input type="number" class="credits rounded p-2 border-2" placeholder="4" value="4" id="inp"/><br/>
         <hr/>
-        <br/>Potential ESA marks if you were to write it: <input type="number" class="esa-mark rounded p-2 border-2" placeholder="6.9"/> out of <input type="number" class="esa-outof rounded p-2 border-2" placeholder="60" value="100" /><br/>
+        <br/>Potential ESA marks if you were to write it: <input type="number" class="esa-mark rounded p-2 border-2" placeholder="6.9" id="inp"/> out of <input type="number" class="esa-outof rounded p-2 border-2" placeholder="60" value="100" id="inp"/><br/>
         </div>
     `)
     );
@@ -442,7 +443,7 @@
             <td class="px-6 py-4 whitespace-nowrap">
               <div class="flex items-center">
                 <div class="ml-4">
-                  <div class="text-sm font-medium text-gray-900">
+                  <div class="text-sm font-medium text-gray-900" id="con">
                     ${grades[i].name}
                   </div>
                 </div>
@@ -451,7 +452,7 @@
             <td class="px-6 py-4 whitespace-nowrap">
               <div class="text-sm text-gray-900">${grades[i].credit}</div>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap">
+            <td class="px-6 py-4 whitespace-nowrap" id="con">
               <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${["S", "A"].includes(grades[i].grade)
           ? "bg-green-100 text-green-800"
           : ["B", "C", "D", "E"].includes(grades[i].grade)
@@ -461,7 +462,7 @@
                 ${grades[i].grade}
               </span>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap">
+            <td class="px-6 py-4 whitespace-nowrap" id="con">
               <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${["S", "A"].includes(esagrades[i].grade)
           ? "bg-green-100 text-green-800"
           : ["B", "C", "D", "E"].includes(esagrades[i].grade)
@@ -490,20 +491,20 @@
     <hr/><br/>
     <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
-          <tr>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <tr >
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" id="th">
               Course
             </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" id="th">
               Credits
             </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" id="th">
               Grade without ESA
             </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" id="th">
               Grade with ESA
             </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" id="th">
               Should you write it?
             </th>
           </tr>
@@ -550,7 +551,7 @@
       for (var i = 0; i < 3; i++) {
         output += `
           <div class="p-8 border-4">
-              <h2 class="text-2xl">
+              <h2 class="text-2xl" id="subname">
                   ${labs[i]}
               </h2>
               Expected Grade: <select class="lab-grade" name="${labclasses}-grade">
@@ -577,6 +578,21 @@
 
   <!-- CSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSS -->
   <style>
+    *{
+      background-color: #FEE459;
+    }
+    .p-12{
+      color: #F43B86;
+    }
+    #grade-divs{
+      color:#3D087B;
+    }
+    #prev-gpa,#grade-deduction,#class-interval,#inp{
+      background-color:#F9F1F1;
+      border-color: #F43B86;
+      box-shadow: 3px 3px 3px 3px #e79db6;
+    }
+
     .switch {
       position: relative;
       display: inline-block;
@@ -643,6 +659,17 @@
     .slider.round:before {
       border-radius: 50%;
     }
+    #btn{
+      background-color: #3D087B;
+    }
+    #subname,#con{
+      color:#3D087B;
+    }
+    #th{
+      color:#F43B86;
+    }
+  
+    
   </style>
   <!-- CSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSS -->
 
