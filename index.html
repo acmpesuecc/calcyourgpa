@@ -2,8 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords"
+    content="gpa,cgpa,sgpa,pes university,grading,grades,marks,results,grade point,calculate,calculate cgpa">
     <title>CalcYourGPA!</title>
     <script src="https://unpkg.com/realm-web@1.2.0/dist/bundle.iife.js"></script>
     <script src="https://unpkg.com/uuid@latest/dist/umd/uuidv4.min.js"></script>
@@ -14,6 +17,11 @@
   </head>
 
   <body>
+    <div id="title" href=>Calculate your CGPA</div>
+    <div id="cont">
+      This webpage is used to calculate your CGPA after you input your marks in all subjects. Also shows you individul grades for even labs and projects
+    </div>
+    <button id="btn1">Calculate now</button>
     <div class="p-12">
       Input your previous sem gpa:
       <input
@@ -757,6 +765,24 @@
         width: 60px;
         height: 20px;
       }
+      #title{
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        color: purple;
+        font-size: 40px;
+        justify-self: center;
+      }
+      #cont{
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        color:rebeccapurple;
+        font-size:28px;
+
+      }
+      #btn1{
+        color:white;
+        background-color: red;
+        padding:25px;
+        border-radius:7px;
+      }
 
       /* Hide default HTML checkbox */
       .switch input {
@@ -833,9 +859,13 @@
                 padding : 10px;
                 border : 3px skyblue solid;
             }
-        }
+        
 
     </style>
     <!-- CSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSSCSS -->
   </body>
+
+
+
+
 </html>
